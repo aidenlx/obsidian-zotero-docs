@@ -1,0 +1,167 @@
+# Template Basics
+
+import { Callout, Steps } from "nextra-theme-docs";
+
+As you dive deeper into using obsidian-zotero, you'll find that having the ability to customize templates according to your specific needs can be incredibly useful. This feature allows you to tailor the output of your literature notes, offering additional flexibility and control over your data.
+
+For our templates, we use the [eta](https://eta.js.org/) template engine. We'll discuss the basics of template language in this section. If you're already familiar with eta, you can skip this section.
+
+## Basics
+
+For the sake of simplicity, let's start with a simple template. As an example, if you want to include only the title in the note filename, you can use the following template:
+
+```js filename="Note Filename"
+<%= it.title %>.md
+```
+
+Every eta tag starts with `<%` and ends with `%>`. The symbol next to `%` signifies the tag type. Here, `<%= ... %>` is an output tag, meaning the evaluated value inside will be rendered as plain text.
+
+A global `it` variable, similar to `tp` variable in Templater, is available in the template. This variable contains the data of the current literature, annotation, etc, depend on the context.
+
+The beauty of eta is that the string inside the tags is evaluated as JavaScript code, which means you can utilize JavaScript for more complex operations. For example, to add suffix to the filename, you can do:
+
+```js filename="Note Filename"
+<%= it.title + "_suffix" %>.md
+```
+
+## Handle list of values (Array)
+
+Suppose that you want to include authors to the note content, you can do:
+
+```ejs filename="Note Content Template"
+<%= it.authors %>
+```
+
+You'll get a list of authors split by comma:
+
+```markdown
+Shira Yanovsky-Dagan,Michal Avitzour,Gheona Altarescu
+```
+
+But you may not wan't a full list of authors. Instead, you may want to include only the first author. You can pick the first element of the array by using:
+
+```ejs filename="Note Content Template"
+<%= it.authors[0] %>
+```
+
+<Callout>
+  Although it's not in ECMAScript standard, you can use `it.authors.first()` and
+  `it.authors.last()` to get the first and last element of the array, which are
+  helper functions provided by Obsidian.
+</Callout>
+
+There are a handful of method bulti-in to the Array, in which you can find the full list [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#instance_methods). You can find example templates in the [cheatsheet](/how-to/template-cheatsheet), here we only discuss the most useful ones.
+
+### Join
+
+To join the array into a string, you can use the [`join` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join), for example:
+
+```ejs filename="Note Content Template"
+<%= it.authors.join(", ") %>
+```
+
+This way the result will have a space after each comma between each author:
+
+```markdown
+Shira Yanovsky-Dagan, Michal Avitzour, Gheona Altarescu
+```
+
+### forEach
+
+You can use the [`forEach` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach) to iterate through the array and render each element, for example:
+
+```ejs filename="Note Content Template"
+- authors:
+<% it.authors.forEach(author => { %>
+  - <%= author %>\n
+<% })  %>
+```
+
+This will render the following:
+
+```markdown
+- authors:
+  - Shira Yanovsky-Dagan
+  - Michal Avitzour
+  - Gheona Altarescu
+```
+
+<Callout>
+  Note here we used a tag that has no symbol next to `<%`, called "Scriptlet" tag, which is used for control-flow specifically, and produce no output. You'll find more usage of this tag in the following sections.
+</Callout>
+
+### filter
+
+You can use the [`filter` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) to filter out elements that don't meet certain criteria. For example, if you only want to include authors whose last name starts with "A", you can do:
+
+```ejs filename="Note Content Template"
+<%= it.authors.filter(author => author.lastName.startsWith("A")) %>
+```
+
+## Handle undefined values
+
+Suppose you wan't to add authors and year to the note content, you can add the following to the template:
+
+```ejs filename="Note Content Template"
+<%= it.date %>; <%= it.authors %>
+```
+
+As expected, the note content will look like this:
+
+```markdown
+2015; Shira Yanovsky-Dagan,Michal Avitzour,Gheona Altarescu
+```
+
+Seems good, right? But what if the date or authors are not defined? for example, for a web page the date may not be available. In this case, you'll get something like this:
+
+```markdown
+; Shira Yanovsky-Dagan,Michal Avitzour,Gheona Altarescu
+```
+
+This is not what we want. So how to make sure that the note content is not rendered with a `;` by itself? Here we can use conditional rendering:
+
+```ejs filename="Note Content Template"
+<% if ( it.date && it.authors[0] ) { %>
+  <%= it.date %>; <%= it.authors[0] %>
+<% } %>
+```
+
+Here we use [`if` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else) to check if the literature has both date and first author. In this case, it will render nothing if the item doesn't have any tag. You can also use `if...else` statement to render different content based on the condition.
+
+```ejs filename="Note Content Template"
+<% if ( it.date && it.authors[0] ) { %>
+  <%= it.date %>; <%= it.authors[0] %>
+<% } else { %>
+  <%= it.date %><%= it.authors[0] %>
+<% } %>
+```
+
+Here we use the `else` statement to render the date and author without `;` if the condition is not met. by default the undefined value will be rendered as empty string, so we can put them directly together without worrying about the extra space.
+
+Another use case where undefined values can get tricky is access the property of something that might be undefined, for example, you may want to include the first author's last name in the note content like so
+
+```ejs filename="Note Content Template"
+<%= it.authors[0].lastName %>
+```
+
+but what if the first author is not defined? Template engine will throw an error and stop rendering. To avoid this, you can use the [`?.`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) to access the property:
+
+```ejs filename="Note Content Template"
+<%= it.authors[0]?.lastName %>
+```
+
+In addition, there is a handy [`??`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator) that can be used to provide a default value if the value is not available. In the default template of note filename, you can see the following:
+
+```js filename="Note Filename"
+<%= it.citekey ?? it.DOI ?? it.title ?? it.key %>.md
+```
+
+We use this to get the first defined value from `citekey`, `DOI`, `title`, and `key`.
+
+There are many other useful methods and operators from JavaScript that can be used in the template, We won't cover them all here, but you can find more examples in the [cheatsheet](/how-to/template-cheatsheet), and you can also find more information about JavaScript from [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
+
+In the next section, we'll discuss how to customize the specific template.
+
+## about line breaks
+
+TBD

@@ -1,0 +1,52 @@
+---
+title: Zotero Plugin
+---
+
+import {
+  ZoteroInfo,
+  ReleaseLink,
+  ReleaseTag,
+} from "@/components/install/zotero/info";
+import { getSSGProps } from "@/components/install/zotero/data";
+import { Callout, Steps } from "nextra-theme-docs";
+
+export const getStaticProps = () =>
+  getSSGProps().then((ssg) => ({ props: { ssg }, revalidate: 60 }));
+
+# Zotero Plugin Setup
+
+<ZoteroInfo />
+
+## Install
+
+<Steps>
+
+### Download
+
+Download `zotero-obsidian-note-*.xpi` from GitHub Release: <ReleaseLink />
+
+<Callout>
+  If you are using Firefox, you should right click the link and choose `Save Link As...`
+</Callout>
+
+<Callout type="info">
+  you can also go to [GitHub Release](https://github.com/aidenlx/obsidian-zotero/releases) page and download the latest release with tag <ReleaseTag /> manually.
+</Callout>
+
+### Open Extensions Manager
+
+In the main menu, go to `Tools` > `Add-ons`, Select `Extensions` tab
+
+### Install the extension from file
+
+1. Click on the gear in the top-right corner and choose `Install Add-on From File...`
+2. Choose `.xpi` that you've just downloaded, click `Install`
+
+### Restart Zotero
+
+</Steps>
+
+<Callout type="info">
+  After the initial installation, the plugin will auto-update to newer releases,
+  so you should need to perform the process described here only once.
+</Callout>

@@ -1,0 +1,253 @@
+# Customizing Templates
+
+import { Callout, Steps } from "nextra-theme-docs";
+import Image from "next/image";
+
+You can access the template settings by navigating to `Settings Tab` > `Template` in Obsidian. There are two types of templates you can work with:
+
+1. Simple templates: These can be edited directly in the settings tab.
+2. Advanced templates (Ejectable): These are saved as markdown template files and need to be ejected into the template folder for further editing.
+
+For our templates, we use the [eta](https://eta.js.org/) template engine, the same engine that powers the [Templater](https://github.com/SilentVoid13/Templater) plugin.
+
+## Edit Simple Template
+
+For the sake of simplicity, let's start with a simple template. As an example, if you want to include only the title in the note filename, you can replace the default template with the following and press `Apply` Button:
+
+```js filename="Note Filename"
+<%= it.title %>.md
+```
+
+## Edit Complex Template
+
+For more complex customization like note content, you'll need to work with the markdown template files, which cannot be edit before being ejected into the template folder.
+
+![Open Ejectable Template Editor](/img/setting-ejectable-template.png)
+
+<Steps>
+
+### Go to the Template Settings
+
+Navigate to `Template` > `Ejectable` in Obsidian Settings Tab
+
+### Eject the Template File
+
+Click the "Eject" button right to Section title to eject the template file into the template folder.
+
+<Callout>Template is saved to `ZtTemplates` folder by default</Callout>
+
+### Open "Note Content" template editor
+
+Click `Open template file` button next to template file path to open the template editor.
+
+### Edit template
+
+The first column is the template file editor where we can edit the template. we'll discuss the other two columns later.
+
+</Steps>
+
+## Use Live Template Editor
+
+To make the template editing process easier, we provide a live template editor. You have just open it in the previous step. The live template editor is a split view with the template file editor on the left and the previews on the right.
+
+The preview are blank if you haven't selected any item. To select an item:
+
+<Steps>
+
+### Open Annotaion Panel in Obsidian
+
+We'll discuss the usage of annotation panel in details later, for now, we only need it to select an item for preview.
+
+1. Open command palette
+2. Select `Open Zotero Annotation View in Side Panel` command
+
+You should see the annotation panel opened on the right side of the screen.
+
+### Pick a literature to preview
+
+<Image
+  src="/img/annot-view-pick-literature.png"
+  alt="Pick Literature in Annotation View"
+  width="500"
+  height="0"
+/>
+
+1. Click on `Choose Follow Mode` Button
+2. Select `Link with Selected Literature` option
+3. Select a literature in the popup searchbox
+
+You should see the preview updated with the selected literature.
+
+### Select literature for preview
+
+<Image
+  src="/img/annot-view-show-details.png"
+  alt="Show Details in Annotation View"
+  width="300"
+  height="0"
+/>
+
+Click on `Show Details` button at the top left, you should see the details of the selected literature opened in the editor.
+
+</Steps>
+
+The full template editor looks like this:
+
+![Template Editor](/img/template-editor.png)
+
+In the template editor, you can:
+
+- Edit the template file on the left
+- Preview the template in the middle with data from selected item
+- View all the available data of the selected item on the right
+
+We'll show you how to make use of all these features in the following sections.
+
+## Customize Each Template
+
+### Update Note Content Template
+
+Let's start with the `Note Content` template. The default template looks like this:
+
+```ejs filename="Note Content"
+# <%= it.title %>
+\n
+[Zotero](<%= it.backlink %>) <%= it.fileLink %>
+\n
+
+<%~ include("annots", it.annotations) %>
+```
+
+Saying that we want to include the abstract of the literature in the note content. If you have opened the template editor with a literature selected, you should see the `abstractNote` in the item details preview, like the following. You can right-click on the `abstractNote` and select `Copy Template (Pick first element)` to copy the template code to the clipboard.
+
+![Copy Abstract Template from Details View](/img/template-editor-copy-1.png)
+
+<Callout>
+    Note the green `[]` after the `abstractNote` in the preview. This means that
+    the `abstractNote` is an array. If it's `{}`, it's an object that have
+    multiple properties inside. You can expand both of them to see the details.
+</Callout>
+
+Now you have `<%= it.abstractNote.first() %>` copied into your clipboard. Paste the template code to the template file editor to anywhere you want, and you should see the template preview updated with the abstract.
+
+### Update Template for Each Annotation
+
+Assuming that the literature you selected has annotations, you should see the annotation panel filled with the annotations like so:
+
+<Image
+  src="/img/annot-view-show-details.png"
+  alt="Show Details in Annotation View"
+  width="300"
+  height="0"
+/>
+
+You can click on the `Show Details` button on the header of each annotation to preview with that annotation.
+
+The default template for each annotation looks like this:
+
+```ejs filename="annotation"
+[!note] Page <%= it.pageLabel %>
+
+<%= it.imgEmbed %>
+<%= it.text %>
+
+<% if (it.comment) { %>
+---
+<%= it.comment %>
+<% } %>
+```
+
+By default, the annotations are rendered as [Callouts](https://help.obsidian.md/Editing+and+formatting/Callouts) with block ID, so that they can be tracked by the plugin for future updates:
+
+```markdown
+> [!note] Page 1
+> ![](image-excerpt.png)Some Excerpt
+>
+> ---
+>
+> This is a comment
+> ^LUE86KQFaF39HNRLZp2
+```
+
+Suppose you want to add color as callout type instead of "note", you can find two variable about color in the annotation: `color` and `colorName`. Here we use `colorName`, which is human-readable color name instead of color code. Right-click on the `abstractNote` and select `Copy Template`.
+
+![Copy Color Template from Details View](/img/template-editor-copy-2.png)
+
+Paste it into `[!note]` to replace it. Your template should look like this:
+
+```ejs filename="annotation"
+[!<%= it.colorName %>] Page <%= it.pageLabel %>
+...
+```
+
+You should see the preview updated with the color name.
+
+In addition, if you want to add the title of the literature to the annotation, you can't find it in the annotation details. Instead, you can find it in the details of parent literature, stored in `it.docItem`. So to add the title, you can use `<%= it.docItem.title %>` in the annotation template.
+
+<Callout>
+
+If you want to check the details of the parent literature, you can use the switch buttons in the header of template preview panel. In this case, you can click on `Open Note Template` button to switch to the parent literature to see details.
+
+<Image
+  src="/img/template-editor-switch-1.png"
+  alt="Switch to Note Template"
+  width="400"
+  height="0"
+/>
+
+</Callout>
+
+### Template for Batch Importing Annotations
+
+You may notice the `<%~ include("annots", it.annotations) %>` in the `Note Content` template. This is a special syntax to include another template. In this case, it's the template for batch importing annotations, named `annots`.
+
+First, let's click on `Open Template for Annotations` Button to open the template editor for annotations.
+
+<Image
+  src="/img/template-editor-switch-2.png"
+  alt="Switch to Annotations Template"
+  width="400"
+  height="0"
+/>
+
+The default template for annotations looks like this:
+
+```ejs filename="annots"
+<% for (const annotation of it) { %>
+<%~ include("annotation", annotation) %>
+\n
+<% } %>
+```
+
+This is a loop template. It loops through all the annotations and pass each annotation to the `annotation` template. The `annotation` template is the template we just edited in the previous section.
+
+Now, let's say we want to add a divider between each annotation. We can add a divider in the `annots` template:
+
+```ejs filename="annots" copy
+<% for (const annotation of it) { %>
+<%~ include("annotation", annotation) %>
+\n
+---
+
+<% } %>
+```
+
+You should see the divider added between each annotation in the preview.
+
+<Callout type="info">
+    **List of Partial templates**
+
+    We use [Partial](https://eta.js.org/docs/intro/template-syntax#partials-and-layouts) and `include` function to reuse some parts of your templates.
+
+    Here is a list of all the templates that can be used as Partial:
+
+    | ID           | Template Name | Description                           |
+    | ------------ | ------------- | ------------------------------------- |
+    | `annots`     | Annotations   | The template for multiple annotations |
+    | `annotation` | Annotation    | The template for each annotation      |
+
+</Callout>
+
+That's all about customizing templates in Obsidian-Zotero. As you can see, the template system is flexible and robust. This tailoring process can be particularly beneficial when dealing with complex literature where multiple annotations need to be imported.
+
+In the next section, we will delve into how you can view these annotations within Obsidian, side-by-side with the literature note. This feature creates an integrated reading and note-taking environment that can significantly boost your productivity and comprehension. Stay tuned!

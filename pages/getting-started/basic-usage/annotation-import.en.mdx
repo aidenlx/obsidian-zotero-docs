@@ -1,0 +1,79 @@
+# Importing Annotations from Zotero
+
+In this section of the tutorial, we will walk you through the process of importing your annotations from the Zotero PDF reader into Obsidian. This feature is essential to maintain synchronization between your reading and note-taking activities.
+
+With the Obsidian-zotero tool, this process has been simplified to a few clicks, saving you the trouble of manually copying annotations.
+
+Here are the step-by-step instructions:
+
+import { Steps, Callout } from "nextra-theme-docs";
+
+## Importing Annotations into Literature Notes
+
+<Steps>
+
+### Select Literatures in Zotero Library
+
+Open your Zotero library and select the PDF file from which you want to import annotations. 
+
+<Callout>
+You can select multiple PDFs by holding down the `Ctrl` key (or `Cmd` on Mac) and clicking 
+on each desired PDF or by holding down the `Shift` key and selecting a range of PDFs.
+</Callout>
+
+### Import
+
+1. Right-click on the desired PDF.
+2. From the drop-down menu that appears, hover over "Obsidian Actions". This will open another submenu.
+3. Select "Create Literature Notes" from this submenu.
+
+![Create Literature Notes from Zotero](/img/zotero-create-notes.png)
+
+### Get Literature Notes in Obsidian
+
+That's it! Your annotations are now imported into a literature note, and the note is automatically opened in Obsidian. 
+By default, the note is saved in the "LiteratureNotes" folder in Obsidian.
+
+</Steps>
+
+## Configuring Metadata Fields to Import
+
+After successfully importing annotations, you will find that some Zotero metadata like `title` is automatically added to the frontmatter of your literature note. This is a powerful feature that allows you to quickly glance at key details of the source document. Moreover, this data can be used for advanced querying when using plugins like Dataview.
+
+The Obsidian-zotero tool allows you to customize this configuration based on your preferences. Here's how to do it:
+
+<Steps>
+
+### Open the Metadata Fields Settings
+
+1. Open Obsidian and navigate to the settings tab (represented by a gear icon on the left sidebar).
+
+2. Under the settings tab, find and click on the `Templates` section.
+
+3. Inside `Templates`, you'll see a subsection titled `Metadata Fields`. This is where we will configure the Zotero metadata to import.
+
+![Metadata Fields Settings](/img/setting-metadata-fields.png)
+
+### Configuring the Metadata Fields
+
+A unique `zotero-key` field is required for the plugin to identify literature notes, 
+which you can't remove. But other than that, you can customize the metadata fields to your liking.
+
+By default, the `title`, `citekey`, and `abstract` are included in the metadata. You can add more fields according to your needs.
+
+For example, to import tags, follow these steps:
+
+1. Enter "tags" in the `Mapping` section.
+
+2. Click on the `Apply` button. The `tags` field should now show up in the mapping list below.
+
+### Customizing Field Names (Optional)
+
+You also have the option to customize the field name used inside Obsidian. 
+
+For example, you can use "zotero-title" instead of "title". 
+To do this, specify an alias "zotero-title" for "title" in the mapping list.
+
+</Steps>
+
+In the next part of our tutorial, we will delve deeper into customizing templates in Obsidian. 
