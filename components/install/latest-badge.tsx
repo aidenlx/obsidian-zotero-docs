@@ -1,6 +1,7 @@
 import clsx from "clsx";
 
 import styles from "./install.module.css";
+import Link from "next/link";
 
 export default function LatestBadge({
   href,
@@ -16,9 +17,19 @@ export default function LatestBadge({
   const newPageProps = newPage
     ? { target: "_blank", rel: "noopener noreferrer" }
     : {};
+
+  const img = <img src={`/img/${type}-latest-badge.svg`} alt={alt} />;
+
+  if (href.startsWith("/")) {
+    return (
+      <Link className={clsx(styles.badge)} href={href} {...newPageProps}>
+        {img}
+      </Link>
+    );
+  }
   return (
     <a className={clsx(styles.badge)} href={href} {...newPageProps}>
-      <img src={`/img/${type}-latest-badge.svg`} alt={alt} />
+      {img}
     </a>
   );
 }
