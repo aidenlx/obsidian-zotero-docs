@@ -1,0 +1,70 @@
+import { Steps, Callout } from "nextra-theme-docs";
+
+# Keep Note Up-to-date
+
+In this chapter, we'll walk you through the process of updating your imported notes to reflect the latest changes from your Zotero PDF reader. This synchronization process ensures that your Obsidian notes mirror the current state of your Zotero annotations, making sure that your research is always up-to-date.
+
+## Incremental Updates
+
+You may still remember that in default template, each annotation is rendered inside a callout with unique block-id. which is used to identify the corresponding annotation in the Zotero PDF reader. This allows the incremental update to work.
+
+The incremental update process is simple: for each annotation, we first check if the block-id exists in the current note. If it doesn't, we append the annotation to the end of the note.
+
+To make sure the incremental update works, you should **never** delete the block-id from the callout.
+
+You can follow the steps below to update your literature note.
+
+<Steps>
+
+### Open the literature note
+
+Open the literature note you want to update in obsidian
+
+### Click "Update Literature Note" Option
+
+In the more options menu located in the top right conner of the note, click "Update Literature Note" to start the update process.
+
+Wait for the update to finish, you should find the updated annotations at the end of the note.
+
+![update note in obsidian](/img/update-note-obsidian.png)
+
+</Steps>
+
+<Callout>
+  You can also find the "Update Literature Note" option when right-click on
+  literature in Zotero library. ![update note from
+  zotero](/img/update-note-zotero.png)
+</Callout>
+
+## Full Update
+
+In case you just want to keep a copy of annotations in Obsidian without adding any additional notes, or you just don't like block id, you can use the "Full Update" option to replace the whole note with the latest annotations.
+
+You can follow the same steps mentioned above, but choose "Force Update by Overwriting" instead.
+
+You can go to `Settings` > `Templates` > `Update Notes` and enable `Overwrite Existing Notes` to make it default behavior. If you enable this option, the "Update Literature Note" option will instead perform a full update.
+
+import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
+
+<Callout
+  type="error"
+  emoji={
+    <ExclamationTriangleIcon style={{ width: "1em", marginTop: 6 }} />
+  }
+>
+  Please make sure you have a backup of your notes before enabling this option
+  if you have made any changes to the imported notes, as it will overwrite your
+  existing notes.
+</Callout>
+
+<Callout>
+If you don't want to wrap your note with callout, you can opt-out by adding a yaml frontmatter in the annotation template like the following:
+
+```yaml copy filename="Annotation Template"
+---
+callout: false
+---
+```
+</Callout>
+
+In the next chapter, we'll show you another way to view your annotations side-by-side with the literature note in Obsidian. 
