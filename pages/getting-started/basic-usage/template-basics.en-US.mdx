@@ -24,9 +24,11 @@ The beauty of eta is that the string inside the tags is evaluated as JavaScript 
 <%= it.title + "_suffix" %>.md
 ```
 
-## Handle list of values (Array)
+## Processing Lists in Templates
 
-Suppose that you want to include authors to the note content, you can do:
+In our data, there may be instances where we have a list of items such as authors, tags, or categories. This list is often presented as an array in JavaScript. To effectively utilize these arrays in our templates, we need to understand a variety of operations and methods that can be used with them.
+
+Suppose that you want to include authors to the note content, you can use this basic structure:
 
 ```ejs filename="Note Content Template"
 <%= it.authors %>
@@ -38,10 +40,11 @@ You'll get a list of authors split by comma:
 Shira Yanovsky-Dagan,Michal Avitzour,Gheona Altarescu
 ```
 
-But you may not wan't a full list of authors. Instead, you may want to include only the first author. You can pick the first element of the array by using:
+However, there may be times when you only want to include the first author or the last author from the array. To do this, you can use the following:
 
 ```ejs filename="Note Content Template"
-<%= it.authors[0] %>
+<%= it.authors[0] /** or it.authors.at(0) */ %>
+<%= it.authors.at(-1) %>
 ```
 
 <Callout>
@@ -72,8 +75,8 @@ You can use the [`forEach` method](https://developer.mozilla.org/en-US/docs/Web/
 
 ```ejs filename="Note Content Template"
 - authors:
-<% it.authors.forEach(author => { %>
-  - <%= author %>\n
+<%- it.authors.forEach(author => { %>
+  - <%= author -%>
 <% })  %>
 ```
 
@@ -98,7 +101,100 @@ You can use the [`filter` method](https://developer.mozilla.org/en-US/docs/Web/J
 <%= it.authors.filter(author => author.lastName.startsWith("A")) %>
 ```
 
-## Handle undefined values
+## Managing Logic - Control Flow in Templates
+
+While writing templates, you may come across scenarios where you want to have different outputs based on different conditions. This is where control flow comes into play.
+
+To handle these logical scenarios, we can use different JavaScript constructs like `if`, `else`, `else if`, `switch`, and `ternary` operators. Let's discuss each of them with the help of examples.
+
+### If...else Statement
+
+An [`if` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else) in JavaScript is written with the `if` keyword, followed by a condition in parentheses, and the code to be executed if the condition is true, inside curly brackets `{}`.
+
+Here is an example to illustrate its usage:
+
+```ejs
+<% if (it.date) { %>
+  The date is <%= it.date %>
+<% } %>
+```
+
+In the above code, the text "The date is ..." will only be rendered if `it.date` is defined.
+
+The `else` statement is used to specify a block of code to be executed if the condition in the `if` statement is false.
+
+Here's an example:
+
+```ejs
+<% if (it.date) { %>
+  The date is <%= it.date %>
+<% } else { %>
+  Date is not available
+<% } %>
+```
+
+In the above code, if `it.date` is not defined, the text "Date is not available" will be rendered.
+
+The `else if` statement can be used to specify a new condition if the first condition is false.
+
+Example:
+
+```ejs
+<% if (it.date) { %>
+  The date is <%= it.date %>
+<% } else if (it.year) { %>
+  The year is <%= it.year %>
+<% } else { %>
+  Neither date nor year is available
+<% } %>
+```
+
+In the above code, if `it.date` is not defined, it checks for `it.year`. If neither is defined, it renders "Neither date nor year is available".
+
+### Switch Statement
+
+The [`switch` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch) is used to perform different actions based on different conditions. 
+
+Here's an example:
+
+```ejs
+<% switch (it.rating) {
+  case 5:
+    %>Excellent<%
+    break;
+  case 4:
+    %>Good<%
+    break;
+  case 3:
+    %>Average<%
+    break;
+  case 2:
+    %>Below Average<%
+    break;
+  default:
+    %>No rating available<%
+} %>
+```
+
+In this code, `it.rating` is compared with different cases, and when a match is found, it renders the corresponding value. If no match is found, it renders "No rating available".
+
+### Ternary Operator
+
+The Conditional operator, or [ternary operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) is a shorthand for an `if` statement and is used when you want to decide which value to assign to a variable based on a Boolean value. It's a one-liner replacement for an `if-else` statement and is also known as the conditional operator.
+
+Here is an example:
+
+```ejs
+The author is <%= it.author ? it.author : 'Unknown' %>
+```
+
+In the above code, if `it.author` is defined, it will render the author's name, otherwise, it will render 'Unknown'.
+
+For this specific usage of handling undefined values, we will discuss in details in the next section.
+
+## Graceful Handling of Undefined Values
+
+In the world of data, not everything is always defined or filled out. This could be due to a variety of reasons, such as missing data, improper formatting, or skipped entries. When you are creating templates, these undefined values could cause your program to halt or result in incomplete outputs. Therefore, learning how to properly handle undefined values becomes an integral part of working with templates. In this part, we will delve into how to manage and maneuver around undefined values, allowing your templates to operate smoothly and gracefully even when some data points are missing.
 
 Suppose you wan't to add authors and year to the note content, you can add the following to the template:
 
@@ -121,8 +217,8 @@ Seems good, right? But what if the date or authors are not defined? for example,
 This is not what we want. So how to make sure that the note content is not rendered with a `;` by itself? Here we can use conditional rendering:
 
 ```ejs filename="Note Content Template"
-<% if ( it.date && it.authors[0] ) { %>
-  <%= it.date %>; <%= it.authors[0] %>
+<% if ( it.date && it.authors.first() ) { %>
+  <%= it.date %>; <%= it.authors.first() %>
 <% } %>
 ```
 
@@ -141,13 +237,13 @@ Here we use the `else` statement to render the date and author without `;` if th
 Another use case where undefined values can get tricky is access the property of something that might be undefined, for example, you may want to include the first author's last name in the note content like so
 
 ```ejs filename="Note Content Template"
-<%= it.authors[0].lastName %>
+<%= it.authors.first().lastName %>
 ```
 
 but what if the first author is not defined? Template engine will throw an error and stop rendering. To avoid this, you can use the [`?.`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) to access the property:
 
 ```ejs filename="Note Content Template"
-<%= it.authors[0]?.lastName %>
+<%= it.authors.first()?.lastName %>
 ```
 
 In addition, there is a handy [`??`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator) that can be used to provide a default value if the value is not available. In the default template of note filename, you can see the following:
@@ -156,12 +252,8 @@ In addition, there is a handy [`??`](https://developer.mozilla.org/en-US/docs/We
 <%= it.citekey ?? it.DOI ?? it.title ?? it.key %>.md
 ```
 
-We use this to get the first defined value from `citekey`, `DOI`, `title`, and `key`.
+We use this template to get the first defined value from `citekey`, `DOI`, `title`, and `key`.
 
 There are many other useful methods and operators from JavaScript that can be used in the template, We won't cover them all here, but you can find more examples in the [cheatsheet](/how-to/template-cheatsheet), and you can also find more information about JavaScript from [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
 
 In the next section, we'll discuss how to customize the specific template.
-
-## about line breaks
-
-TBD

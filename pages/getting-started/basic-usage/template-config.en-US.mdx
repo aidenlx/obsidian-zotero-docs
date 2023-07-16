@@ -61,6 +61,8 @@ We'll discuss the usage of annotation panel in details later, for now, we only n
 1. Open command palette
 2. Select `Open Zotero Annotation View in Side Panel` command
 
+![open annotation view](/img/open-annotation-view.png)
+
 You should see the annotation panel opened on the right side of the screen.
 
 ### Pick a literature to preview
@@ -111,10 +113,8 @@ Let's start with the `Note Content` template. The default template looks like th
 
 ```ejs filename="Note Content"
 # <%= it.title %>
-\n
-[Zotero](<%= it.backlink %>) <%= it.fileLink %>
-\n
 
+[Zotero](<%= it.backlink %>) <%= it.fileLink %>
 <%~ include("annots", it.annotations) %>
 ```
 
@@ -123,9 +123,9 @@ Saying that we want to include the abstract of the literature in the note conten
 ![Copy Abstract Template from Details View](/img/template-editor-copy-1.png)
 
 <Callout>
-    Note the green `[]` after the `abstractNote` in the preview. This means that
-    the `abstractNote` is an array. If it's `{}`, it's an object that have
-    multiple properties inside. You can expand both of them to see the details.
+  Note the green `[]` after the `abstractNote` in the preview. This means that
+  the `abstractNote` is an array. If it's `{}`, it's an object that have
+  multiple properties inside. You can expand both of them to see the details.
 </Callout>
 
 Now you have `<%= it.abstractNote.first() %>` copied into your clipboard. Paste the template code to the template file editor to anywhere you want, and you should see the template preview updated with the abstract.
@@ -148,9 +148,7 @@ The default template for each annotation looks like this:
 ```ejs filename="annotation"
 [!note] Page <%= it.pageLabel %>
 
-<%= it.imgEmbed %>
-<%= it.text %>
-
+<%= it.imgEmbed %><%= it.text %>
 <% if (it.comment) { %>
 ---
 <%= it.comment %>
@@ -215,7 +213,6 @@ The default template for annotations looks like this:
 ```ejs filename="annots"
 <% for (const annotation of it) { %>
 <%~ include("annotation", annotation) %>
-\n
 <% } %>
 ```
 
@@ -226,13 +223,14 @@ Now, let's say we want to add a divider between each annotation. We can add a di
 ```ejs filename="annots" copy
 <% for (const annotation of it) { %>
 <%~ include("annotation", annotation) %>
-\n
----
 
+---
 <% } %>
 ```
 
 You should see the divider added between each annotation in the preview.
+
+That's all about customizing templates in Obsidian-Zotero. In the next section, we will delve into how you can keep your literature notes up-to-date with the latest changes in Zotero.
 
 <Callout type="info">
     **List of Partial templates**
@@ -247,7 +245,3 @@ You should see the divider added between each annotation in the preview.
     | `annotation` | Annotation    | The template for each annotation      |
 
 </Callout>
-
-That's all about customizing templates in Obsidian-Zotero. As you can see, the template system is flexible and robust. This tailoring process can be particularly beneficial when dealing with complex literature where multiple annotations need to be imported.
-
-In the next section, we will delve into how you can view these annotations within Obsidian, side-by-side with the literature note. This feature creates an integrated reading and note-taking environment that can significantly boost your productivity and comprehension. Stay tuned!
