@@ -8,7 +8,7 @@ import {
   ReleaseTag,
 } from "@/components/install/zotero/info";
 import { getSSGProps } from "@/components/install/zotero/data";
-import { Callout, Steps } from "nextra-theme-docs";
+import { Callout, Steps } from "nextra/components";
 
 export const getStaticProps = () =>
   getSSGProps().then((ssg) => ({ props: { ssg }, revalidate: 60 }));
