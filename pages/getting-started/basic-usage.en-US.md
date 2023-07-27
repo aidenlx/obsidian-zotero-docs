@@ -10,7 +10,5 @@ In this tutorial, we're going to focus on the following key features of the obsi
 
 3. **Search and Insert Citation and Bibliography in Markdown Format:** With obsidian-zotero, you can search your Zotero library and insert citations and bibliographies directly into your Obsidian notes in markdown format.
 
-4. **Add Metadata to Literature Note's Frontmatter:** Quickly add metadata to your literature note's frontmatter for easy querying with Obsidian's dataview plugin.
-
 Now, without further ado, let's dive into each of these features to help you get the most out of obsidian-zotero!
 
