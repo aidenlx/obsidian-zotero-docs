@@ -1,3 +1,5 @@
+import { Callout, Steps } from "nextra/components";
+
 # Template Cheatsheet
 
 Leave your common usage in the comment section below and we will add them to the list.
@@ -6,11 +8,30 @@ Leave your common usage in the comment section below and we will add them to the
 
 ### Get author shorthand [#authors-shorthand]
 
-```ejs filename="Note Content" copy
-[authors:: <%= it.authorsShort %>]
+```ejs filename="Note Properties" copy
+authors: <%= it.authorsShort %>
 ```
 
-It will be rendered like `[authors:: Gerasimavicius et al.]`.
+It will be rendered like `Gerasimavicius et al.`.
+
+### Get List of Authors in Full Names [#author-fullname-list]
+
+```ejs filename="Note Properties" copy
+authors: [<%= it.authors %>]
+```
+
+### Get List of Authors in first name or last name [#author-first-last-name-list]
+
+```ejs filename="Note Properties" copy
+authors: [<%= it.authors.map(v => v.firstName) %>]
+# or
+authors: [<%= it.authors.map(v => v.lastName) %>]
+```
+
+<Callout>
+Do note that first name and last name are not always available. 
+</Callout>
+
 
 ## Abstract [#abstract]
 
@@ -22,13 +43,45 @@ It will be rendered like `[authors:: Gerasimavicius et al.]`.
 <%= it.abstractNote.first().replace(/[\r\n]+/g, " ") %>
 ```
 
+## Tags [#tags]
+
+### Include only manually created tags [#only-manual-tags]
+
+To include only manually created tags, not the ones retrieved from literature, use the following code:
+
+```ejs filename="Note Properties" copy
+tags: [<%= it.tags.filter(t => t.type === 0) %>]
+```
+
+<Callout type="info">
+This is the default behavior before the change in v1.1.0.
+</Callout>
+
+<Callout>
+In Zotero, manually created tags have value 0, while the ones retrieved from literature have value 1.
+</Callout>
+
+## Date [#date]
+
+### Get when the literature was imported to Zotero [#date-accessed]
+
+```ejs filename="Note Properties" copy
+import-date: <%= it.dateAccessed %>
+```
+
+### Get publish date [#date-published]
+
+```ejs filename="Note Properties" copy
+publish-date: <%= it.date %>
+```
+
 ## Grouping [#grouping]
 
 For details, see [Object.groupBy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy) and [Map.groupBy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/groupBy).
 
 ### Group by annotation color [#group-by-annotation-color]
 
-```ejs filename="annotations" copy
+```ejs filename="Note Annotations" copy
 <% const byColor = Object.groupBy(it, (annot) => annot.colorName); 
 for (const color in byColor) { -%>
 
@@ -42,7 +95,7 @@ for (const color in byColor) { -%>
 
 ### Group by annotation color, customized label [#group-by-annotation-color-customized-label]
 
-```ejs filename="annotations" copy
+```ejs filename="Note Annotations" copy
 <% const byColor = Object.groupBy(it, (annot) => annot.colorName);
 const label = {
   "red": "Important",

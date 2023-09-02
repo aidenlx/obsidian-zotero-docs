@@ -1,20 +1,40 @@
-# 模板速查表
+import { Callout, Steps } from "nextra/components";
 
-请在下方评论区留下您的经常用的模板，我们将把它们添加到列表中。
+# 模板备忘单
+
+请在评论区留下您常用的用法，我们将将它们添加到列表中。
 
 ## 作者 [#authors]
 
-### 作者缩写 [#authors-shorthand]
+### 获取作者简称 [#authors-shorthand]
 
-```ejs filename="Note Content" copy
-[authors:: <%= it.authorsShort %>]
+```ejs filename="Note Properties" copy
+authors: <%= it.authorsShort %>
 ```
 
-渲染结果类似 `[authors:: Gerasimavicius et al.]`。
+输出类似 `Gerasimavicius et al.` 的形式。
+
+### 获取完整姓名的作者列表 [#author-fullname-list]
+
+```ejs filename="Note Properties" copy
+authors: [<%= it.authors %>]
+```
+
+### 获取作者的名字或姓氏列表 [#author-first-last-name-list]
+
+```ejs filename="Note Properties" copy
+authors: [<%= it.authors.map(v => v.firstName) %>]
+# 或者
+authors: [<%= it.authors.map(v => v.lastName) %>]
+```
+
+<Callout>
+请注意，名字和姓氏并不总是存在
+</Callout>
 
 ## 摘要 [#abstract]
 
-### 摘要输出为单行 [#abstract-oneline]
+### 以单个段落获取摘要 [#abstract-oneline]
 
 ```ejs filename="Note Content" copy
 ## 摘要
@@ -22,13 +42,45 @@
 <%= it.abstractNote.first().replace(/[\r\n]+/g, " ") %>
 ```
 
+## 标签
+
+### 仅包含手动创建的标签 [#only-manual-tags]
+
+要仅包含手动创建的标签，除外从文献中提取的标签，请使用以下代码：
+
+```ejs filename="Note Properties" copy
+tags: [<%= it.tags.filter(t => t.type === 0) %>]
+```
+
+<Callout type="info">
+这是 v1.1.0 之前的默认行为。
+</Callout>
+
+<Callout>
+在 Zotero 中，手动创建的标签值为 0，而从文献中提取的标签值为 1。
+</Callout>
+
+## 日期
+
+### 获取文献导入 Zotero 的日期 [#date-accessed]
+
+```ejs filename="Note Properties" copy
+import-date: <%= it.dateAccessed %>
+```
+
+### 获取文献发表日期 [#date-published]
+
+```ejs filename="Note Properties" copy
+publish-date: <%= it.date %>
+```
+
 ## 分组 [#grouping]
 
-详见 [Object.groupBy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy) 和 [Map.groupBy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Map/groupBy)
+有关详细信息，请参见 [Object.groupBy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy) 和 [Map.groupBy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/groupBy)。
 
-### 按批注颜色分组 [#group-by-annotation-color]
+### 按注释颜色分组 [#group-by-annotation-color]
 
-```ejs filename="annotations" copy
+```ejs filename="Note Annotations" copy
 <% const byColor = Object.groupBy(it, (annot) => annot.colorName); 
 for (const color in byColor) { -%>
 
@@ -40,9 +92,9 @@ for (const color in byColor) { -%>
 <% } %>
 ```
 
-### 按批注颜色分组（自定义颜色名称） [#group-by-annotation-color-customized-label]
-  
-```ejs filename="annotations" copy
+### 按注释颜色分组，自定义标签 [#group-by-annotation-color-customized-label]
+
+```ejs filename="Note Annotations" copy
 <% const byColor = Object.groupBy(it, (annot) => annot.colorName);
 const label = {
   "red": "红色",
