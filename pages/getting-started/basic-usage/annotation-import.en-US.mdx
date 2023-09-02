@@ -36,44 +36,4 @@ By default, the note is saved in the "LiteratureNotes" folder in Obsidian.
 
 </Steps>
 
-## Configuring Metadata Fields to Import
-
-After successfully importing annotations, you will find that some Zotero metadata like `title` is automatically added to the frontmatter of your literature note. This is a powerful feature that allows you to quickly glance at key details of the source document. Moreover, this data can be used for advanced querying when using plugins like Dataview.
-
-The Obsidian-zotero tool allows you to customize this configuration based on your preferences. Here's how to do it:
-
-<Steps>
-
-### Open the Metadata Fields Settings
-
-1. Open Obsidian and navigate to the settings tab (represented by a gear icon on the left sidebar).
-
-2. Under the settings tab, find and click on the `Templates` section.
-
-3. Inside `Templates`, you'll see a subsection titled `Metadata Fields`. This is where we will configure the Zotero metadata to import.
-
-![Metadata Fields Settings](/img/setting-metadata-fields.png)
-
-### Configuring the Metadata Fields
-
-A unique `zotero-key` field is required for the plugin to identify literature notes, 
-which you can't remove. But other than that, you can customize the metadata fields to your liking.
-
-By default, the `title`, `citekey`, and `abstract` are included in the metadata. You can add more fields according to your needs.
-
-For example, to import tags, follow these steps:
-
-1. Enter "tags" in the `Mapping` section.
-
-2. Click on the `Apply` button. The `tags` field should now show up in the mapping list below.
-
-### Customizing Field Names (Optional)
-
-You also have the option to customize the field name used inside Obsidian. 
-
-For example, you can use "zotero-title" instead of "title". 
-To do this, specify an alias "zotero-title" for "title" in the mapping list.
-
-</Steps>
-
-In the next part of our tutorial, we will delve deeper into customizing templates in Obsidian. 
+In the next part of our tutorial, we will delve deeper into customizing templates in Obsidian, for example, to change what properties are included in the literature note.

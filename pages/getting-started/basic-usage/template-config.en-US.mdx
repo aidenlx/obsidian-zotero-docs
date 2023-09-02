@@ -107,9 +107,47 @@ We'll show you how to make use of all these features in the following sections.
 
 ## Customize Each Template
 
+### Setup Note Properties Template
+
+Let's start with the `Note Properties` template. By default it looks like this:
+
+```ejs filename="Note Properties"
+title: "<%= it.title %>"
+citekey: "<%= it.citekey %>"
+```
+
+This is a [YAML](https://yaml.org/) template. It's used to set the [frontmatter](https://help.obsidian.md/Editing+and+formatting/Properties) of the note. You can add any frontmatter you want in this template.
+
+<Callout>
+Note the quoted `<%= it.title %>` and `<%= it.citekey %>` in the template. For most scalars you don’t need any quotes at all, but if you need to define some piece of data which contains characters that could be mistaken with YAML syntax you need to quote it in either double " or single ' quotes for the YAML file to stay valid. As simple rule of thumb, if your data contains any of these characters `:-{}[]!#|>&%@` better quote it. Also quote it if you want a string but it could be mistaken for a valid number (integer or float) or if it consists only of “Yes”, “No”, “yes”, “no”, “true” or “false”, which would be converted to a boolean without quotes.
+</Callout>
+
+For example, if you want to add the `tags` field to the frontmatter, you can add the following line to the template:
+
+```ejs filename="Note Properties" copy
+tags: [<%= it.tags %>]
+```
+
+In this example, we warp the `tags` field with `[]` to make sure tag containing space characters like `my tag` are parsed properly. If your tags may contain special characters like `[]` or `,` mentioned before, you can use `JSON.stringify` to escape them:
+
+```ejs filename="Note Properties" copy
+tags: <%= JSON.stringify(it.tags) %>
+```
+
+For more examples of Note Property Template, please refer to [How-to](/how-to/note-property-template) section.
+
+<Callout>
+
+This template is parsed using Obsidian's bulti-in YAML parser before being applied to the note. You may notice the resulting frontmatter is not exactly the same as the template. 
+
+You can safely put a field that doesn't exist in the selected item, as it will be ignored before being applied to the note.
+
+</Callout>
+
+
 ### Update Note Content Template
 
-Let's start with the `Note Content` template. The default template looks like this:
+The default template looks like this:
 
 ```ejs filename="Note Content"
 # <%= it.title %>
