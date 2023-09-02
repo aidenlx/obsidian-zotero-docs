@@ -1,9 +1,10 @@
 import { useData } from "nextra/data";
 import type { ObsidianInstallProps } from "./data";
-import ViaObsidian from "./obsidian.mdx";
-import ViaBRAT from "./brat.mdx";
-import Manual from "./manual.mdx";
 import { Tab, Tabs } from "nextra/components";
+import ViaObsidian from "./obsidian.en-US.mdx";
+import ViaBRAT from "./brat.en-US.mdx";
+import Manual from "./manual.en-US.mdx";
+
 
 export default function ObsidianInstall() {
   const { defaultMethod } = useData() as ObsidianInstallProps;
