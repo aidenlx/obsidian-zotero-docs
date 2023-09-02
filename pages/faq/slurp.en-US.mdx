@@ -1,0 +1,60 @@
+# Why Extra Lines are Included in the Template Output?
+
+When you're working with eta scripts, white space and newlines can sometimes become an issue. 
+By default, the script will preserve all whitespace and newlines from your templates, which can lead to unexpected results in your rendered markdown.
+
+### Why Extra Empty Lines May Be Introduced:
+
+When you embed JavaScript inside an Eta tag, such as `<%`, even if that block doesn't produce any output directly, it can introduce extra whitespace and newlines in the rendered output.
+
+For instance, consider the following:
+
+```ejs
+- Hello
+<% if (true) { %>
+- World
+<% } %>
+```
+
+The above template might result in:
+
+```md
+- Hello
+
+- World
+```
+
+Notice the extra empty line? It's there because Eta retains the newline after the `<% if (true) { %>` and also the one after the closing `<% } %>`. This is often not what you'd expect or want.
+
+### Solving with `-%>`:
+
+Eta provides a solution to control this whitespace with the `-%>` ending tag. The dash (`-`) before the `%>` indicates that any newline immediately following the closing tag should be trimmed. 
+
+Refactoring our example with this tag (Note the dash after the `if (true) { `):
+
+```ejs
+- Hello
+<% if (true) { -%>
+- World
+<% } %>
+```
+
+Now, this would render:
+
+```md
+- Hello
+- World
+```
+
+The extra empty line after `- Hello` has been removed.
+
+### Recap
+
+When `autoTrim` is disabled, the default behavior of Eta is to preserve all whitespace and newlines, which can introduce unexpected empty lines in the output. 
+But you can control this behavior by using the `<%-` opening tag or the `-%>` ending tag.
+
+Also, to trim whitespace before tags, you can use the `<%_` opening tag or the `_%>` ending tag. 
+
+If you want to enable newline trimming after the tag by default, which is the default behavior before the change in v1.1.0, you can enable Ending `Newline slurp` in `Template` - `Auto Trim` settings.
+
+![auto trim settings](/img/auto-trim.png)
