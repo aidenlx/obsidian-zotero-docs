@@ -1,0 +1,46 @@
+# Template Cheatsheet
+
+## Grouping
+
+For details, see [Object.groupBy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy) and [Map.groupBy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/groupBy).
+
+### Group by annotation color
+
+```ejs filename="annotations" copy
+<% const byColor = Object.groupBy(it, (annot) => annot.colorName); 
+for (const color in byColor) { -%>
+
+## <%= color %>
+  <%_ for (const annot of byColor[color]) { %>
+
+<%~ include("annotation", annot) %>
+  <%_ } %>
+<% } %>
+```
+
+### Group by annotation color, customized label
+  
+```ejs filename="annotations" copy
+<% const byColor = Object.groupBy(it, (annot) => annot.colorName);
+const label = {
+  "red": "Important",
+  "orange": "Question"
+  "yellow": "Summary",
+  "gray": "Comment",
+  "green": "Answer",
+  "cyan": "Task",
+  "blue": "Fact",
+  "navy": "Definition",
+  "purple": "Quote",
+  "brown": "Source",
+  "magenta": "To Do",
+};
+for (const color in byColor) { -%>
+
+## <%= label[color] ?? color %>
+  <%_ for (const annot of byColor[color]) { %>
+
+<%~ include("annotation", annot) %>
+  <%_ } %>
+<% } %>
+```

@@ -12,12 +12,12 @@ To include only manually created tags, not the ones retrieved from literature, u
 tags: [<%= it.tags.filter(t => t.type === 0) %>]
 ```
 
-<Callout>
-In Zotero, manually created tags have value 0, while the ones retrieved from literature have value 1.
-</Callout>
-
 <Callout type="info">
 This is the default behavior before the change in v1.1.0.
+</Callout>
+
+<Callout>
+In Zotero, manually created tags have value 0, while the ones retrieved from literature have value 1.
 </Callout>
 
 ## Get when the literature was imported to Zotero

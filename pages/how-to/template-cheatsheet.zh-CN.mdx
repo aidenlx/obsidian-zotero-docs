@@ -1,0 +1,46 @@
+# 模板速查表
+
+## 分组
+
+详见 [Object.groupBy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy) 和 [Map.groupBy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Map/groupBy)
+
+### 按批注颜色分组
+
+```ejs filename="annotations" copy
+<% const byColor = Object.groupBy(it, (annot) => annot.colorName); 
+for (const color in byColor) { -%>
+
+## <%= color %>
+  <%_ for (const annot of byColor[color]) { %>
+
+<%~ include("annotation", annot) %>
+  <%_ } %>
+<% } %>
+```
+
+### 按批注颜色分组（自定义颜色名称）
+  
+```ejs filename="annotations" copy
+<% const byColor = Object.groupBy(it, (annot) => annot.colorName);
+const label = {
+  "red": "红色",
+  "orange": "橙色",
+  "yellow": "黄色",
+  "gray": "灰色",
+  "green": "绿色",
+  "cyan": "青色",
+  "blue": "蓝色",
+  "navy": "海军蓝",
+  "purple": "紫色",
+  "brown": "棕色",
+  "magenta": "品红",
+};
+for (const color in byColor) { -%>
+
+## <%= label[color] ?? color %>
+  <%_ for (const annot of byColor[color]) { %>
+
+<%~ include("annotation", annot) %>
+  <%_ } %>
+<% } %>
+```

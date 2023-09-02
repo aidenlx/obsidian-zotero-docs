@@ -39,7 +39,7 @@ const config: DocsThemeConfig = {
   },
   i18n: [
     { locale: "en-US", text: "English" },
-    // { locale: "zh-CN", text: "简体中文" },
+    { locale: "zh-CN", text: "简体中文" },
   ],
   logo: (
     <div className="nx-flex nx-gap-2 nx-items-center">

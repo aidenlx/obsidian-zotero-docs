@@ -1,0 +1,70 @@
+import { Steps, Callout } from "nextra/components";
+
+# 更新笔记
+
+在本章中，我们将带领您逐步学习如何更新已导入的笔记，以反映来自 Zotero PDF 阅读器的最新更改。这个同步过程确保您的 Obsidian 笔记与 Zotero 注释的当前状态相一致，以确保您的研究始终是最新的。
+
+## 增量更新
+
+您可能还记得，在默认模板中，每个注释都在一个带有唯一块标识的 callout 中呈现。这个块标识用于在 Zotero PDF 阅读器中标识相应的注释，这使得增量更新得以进行。
+
+增量更新的过程很简单：对于每个注释，我们首先检查当前笔记中是否存在块标识。如果不存在，我们将注释追加到笔记的末尾。
+
+<Callout type="warning">
+
+为确保增量更新正常工作，您**不应该删除** callout 中的块标识。
+
+</Callout>
+
+您可以按照下面的步骤来更新您的文献笔记。
+
+<Steps>
+
+### 打开文献笔记
+
+在 Obsidian 中打开您想要更新的文献笔记。
+
+### 点击“更新文献笔记”选项
+
+在笔记右上角的更多选项菜单中，点击“Update Literature Note”以开始更新过程
+
+等待更新完成，您应该可以在笔记的末尾找到更新的注释。
+
+![在 Obsidian 中更新笔记](/img/update-note-obsidian.png)
+
+</Steps>
+
+<Callout>
+  也可以在 Zotero 文献库中的文献上右键点击，找到“Update Literature Note”选项。![在 Zotero 上更新笔记](/img/update-note-zotero.png)
+</Callout>
+
+## 完全更新
+
+如果您只想在 Obsidian 中保留注释的副本而不添加任何附加笔记，或者您不喜欢块标识，您可以使用“完全更新”选项将整个笔记替换为最新的注释。
+
+您可以按照上述相同的步骤，但选择“强制覆盖更新”选项。
+
+您可以进入 `设置` > `Template` > `Update Note`，并启用 `Override Existing Note`，以设为默认行为。如果启用了该选项，“Update Literature Note”选项将执行完全更新。
+
+import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
+
+<Callout
+  type="error"
+  emoji={
+    <ExclamationTriangleIcon style={{ width: "1em", marginTop: 6 }} />
+  }
+>
+  在启用此选项之前，请确保对导入的笔记进行了备份，以防您对其进行了任何更改，因为它将覆盖您现有的笔记。
+</Callout>
+
+<Callout>
+如果您不想在注释模板中使用 callout，您可以通过将以下 frontmatter 添加到注释模板中来禁用它：
+
+```yaml copy filename="注释模板"
+---
+callout: false
+---
+```
+</Callout>
+
+下一章中，我们将介绍在 Obsidian 中将注释与文献笔记并排显示的方法。

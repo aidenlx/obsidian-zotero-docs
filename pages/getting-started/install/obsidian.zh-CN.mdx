@@ -1,0 +1,44 @@
+---
+title: Obsidian插件
+---
+
+# Obsidian Plugin Setup
+
+import { Callout, Tab, Tabs, Steps } from "nextra/components";
+
+import { getSSGProps } from "@/components/install/obsidian/data";
+import ObsidianInstall from "@/components/install/obsidian/main";
+
+export const getStaticProps = () =>
+  getSSGProps().then((ssg) => ({ props: { ssg }, revalidate: 60 }));
+
+## Install Plugin
+
+<ObsidianInstall />
+
+## 基本配置
+
+与其他引文插件不同，该插件可直接读取 Zotero 数据库，从而在访问所有 Zotero 数据的情况下提供最佳性能。但是，为了使用此插件，需要进行一些额外设置：
+
+<Steps>
+
+### 下载二进制文件
+
+该插件需要一个二进制文件（`better-sqlite3`）来连接 Zotero 的数据库。通常情况下会弹出一个窗口，要求您下载二进制文件。请按照窗口中的说明下载二进制文件。
+
+![Binary Install Guide](/img/binary-install-guide.png)
+
+如果二进制文件已损坏或过时，也会显示该弹窗，以便您重置或更新二进制文件。
+
+### 设置 Zotero 数据库路径
+
+插件需要知道 Zotero 数据库的位置。如果您没有将 Zotero 数据库移动到其他位置，插件应该可以自动找到它。在 "设置" > "Connect" 中，您应该能看到标为绿色的 Zotero 数据库路径。（如果你已经在 Zotero 中安装了 Better BibTex，路径也将是绿色的）。
+
+![Zotero Database Location Config](/img/connect-cfg-obsidian.png)
+
+如果您移动了 Zotero 的数据库，则需要指定插件数据库的位置。您可以打开 Zotero，进入 "首选项" > "高级" > "数据存储位置"，找到 Zotero 数据目录的路径。
+
+![Zotero Database Location](/img/zotero-data-dir.png)
+
+</Steps>
+

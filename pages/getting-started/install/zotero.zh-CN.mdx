@@ -1,0 +1,51 @@
+---
+title: Zotero插件
+---
+
+import {
+  ZoteroInfo,
+  ReleaseLink,
+  ReleaseTag,
+} from "@/components/install/zotero/info";
+import { getSSGProps } from "@/components/install/zotero/data";
+import { Callout, Steps } from "nextra/components";
+
+export const getStaticProps = () =>
+  getSSGProps().then((ssg) => ({ props: { ssg }, revalidate: 60 }));
+
+# Zotero Plugin Setup
+
+<ZoteroInfo />
+
+## Install
+
+<Steps>
+
+### Download
+
+从 GitHub Release 下载 `zotero-obsidian-note-*.xpi` 插件: <ReleaseLink />
+
+<Callout type="info">
+  如果您使用的是火狐浏览器，则应右键单击链接并选择 `另存为链接...`
+</Callout>
+
+<Callout>
+  您也可以访问 [GitHub Release](https://github.com/aidenlx/obsidian-zotero/releases) 页面，手动下载标签为 <ReleaseTag /> 的最新版本。
+</Callout>
+
+### 打开插件管理器
+
+主菜单选择 `工具` > `附件组件`
+
+### 安装插件
+
+1. 点击右上角齿轮⚙图标，在菜单中选择 `Install Add-on From File...`
+2. 选择刚才下载的 `.xpi` 文件, 单击 `Install`
+
+### 重启 Zotero
+
+</Steps>
+
+<Callout type="info">
+  安装之后，插件会自动更新到新版本，因此理论上您只需执行一次此处描述的过程，如果插件未能自动更新，你可能需要重复此过程。
+</Callout>

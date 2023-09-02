@@ -1,0 +1,261 @@
+# 模板基础知识
+
+import { Callout, Steps } from "nextra/components";
+
+在深入使用 obsidian-zotero 过程中，您会发现根据特定需求定制模板的能力非常有用。这个功能允许您根据文献笔记的输出格式进行定制，提供了对数据的额外灵活性和控制能力。
+
+对于我们的模板，我们使用 [eta](https://eta.js.org/) 模板引擎。本节中，我们将介绍模板语言的基础知识。如果您已经熟悉 eta，可以跳过本节。
+
+## 基础知识
+
+为了简单起见，让我们从一个简单的模板开始。假设您只想在笔记文件名中包含标题，您可以使用以下模板：
+
+```ejs filename="Note Filename"
+<%= it.title %>.md
+```
+
+每个 eta 标签都以 `<%` 开始，以 `%>` 结束。`%` 旁边的符号表示标签的类型。在这里，`<%= ... %>` 是一个输出标签，意味着其中的求值结果将被呈现为纯文本。
+
+模板中有一个全局的 `it` 变量，类似于 Templater 中的 `tp` 变量。此变量包含当前文献、注释的数据，具体取决于上下文。
+
+Eta 的优点在于标签内的字符串将作为 JavaScript 代码进行求值，这意味着您可以使用 JavaScript 进行更复杂的操作。例如，要在文件名后添加后缀，可以这样做：
+
+```ejs filename="Note Filename"
+<%= it.title + "_我是后缀" %>.md
+```
+
+## 处理模板中的列表
+
+在我们的数据中，可能出现包含作者、标签等项目的列表。这些列表在 JavaScript 中通常表示为数组。为了有效地利用这些数组进行模板处理，我们需要了解可以与它们一起使用的各种操作和方法。
+
+假设您想将作者包含到笔记内容中，可以使用以下基本结构：
+
+```ejs filename="Note Content Template"
+<%= it.authors %>
+```
+
+这将得到一个由逗号分隔的作者列表：
+
+```markdown
+Shira Yanovsky-Dagan,Michal Avitzour,Gheona Altarescu
+```
+
+然而，有时您可能只想包含数组中的第一个作者或最后一个作者。为此，您可以使用以下方法：
+
+```ejs filename="Note Content Template"
+<%= it.authors[0] /** 或者 it.authors.at(0) **/ %>
+<%= it.authors.at(-1) %>
+```
+
+<Callout>
+  尽管它不在 ECMAScript 标准中，但您可以使用 `it.authors.first()` 和 `it.authors.last()` 来获取数组的第一个和最后一个元素，这是 Obsidian 提供的辅助函数。
+</Callout>
+
+数组内置了一些方法，您可以在[此处](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array#instance_methods)找到完整的列表。在[速查表](/how-to/template-cheatsheet)中，您可以找到更多示例模板，这里我们只讨论最有用的一些。
+
+### join
+
+您可以使用 [`join` 方法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/join)将数组连接成一个字符串，例如：
+
+```ejs filename="Note Content Template"
+<%= it.authors.join(", ") %>
+```
+
+这样，结果字符串中的每个作者之间都会有一个逗号和一个空格：
+
+```markdown
+Shira Yanovsky-Dagan, Michal Avitzour, Gheona Altarescu
+```
+
+### forEach
+
+您可以使用 [`forEach` 方法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)来遍历数组并渲染每个元素，例如：
+
+```ejs filename="Note Content Template"
+- authors:
+<%- it.authors.forEach(author => { %>
+  - <%= author -%>
+<% })  %>
+```
+
+这将渲染如下内容：
+
+```markdown
+- authors:
+  - Shira Yanovsky-Dagan
+  - Michal Avitzour
+  - Gheona Altarescu
+```
+
+<Callout>
+  注意，这里使用的标签旁边没有 `%` 符号，称为 "Scriptlet" 标签，专门用于控制流，并且不产生输出。在后面的部分，您将找到更多关于此标签的用法。
+</Callout>
+
+<Callout>
+  请注意，我们使用的是 `<% ... -%>` 而不是 `<%= ... %>`。这是因为我们不想要在每个作者之间添加额外的空行。关于这个问题的更多信息，请参阅 [FAQ](/faq/slurp)。
+</Callout>
+
+### filter
+
+您可以使用 [`filter` 方法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)来过滤不满足特定条件的元素。例如，如果您只想包含姓氏以字母 "A" 开头的作者，可以使用以下方法：
+
+```ejs filename="Note Content Template"
+<%= it.authors.filter(author => author.lastName.startsWith("A")) %>
+```
+
+## 控制流管理
+
+在编写模板时，您可能会遇到根据不同条件生成不同输出的情况。这时就需要使用控制流。
+
+为了处理这些逻辑情况，我们可以使用不同的 JavaScript 构造，如 `if`、`else`、`else if`、`switch` 和三元操作符等。让我们通过示例讨论每种情况。
+
+### If...else 语句
+
+在 JavaScript 中，使用 `if` 关键字后跟括号中的条件，以及如果条件为 true 时要执行的代码（位于大括号 `{}` 内）来编写 [`if` 语句](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/if...else)。
+
+以下是一个示例，以说明它的用法：
+
+```ejs
+<% if (it.date) { %>
+  日期： <%= it.date %>
+<% } %>
+```
+
+在上面的代码中，如果 `it.date` 被定义，那么文本 "日期是 ..." 将会被渲染。
+
+`else` 语句用于指定在 `if` 语句条件为 false 时要执行的代码块。
+
+以下是一个示例：
+
+```ejs
+<% if (it.date) { %>
+  日期： <%= it.date %>
+<% } else { %>
+  日期不存在
+<% } %>
+```
+
+在上面的代码中，如果 `it.date` 未定义，那么文本 "日期不可用" 将被渲染。
+
+`else if` 语句可用于在第一个条件为 false 时指定一个新条件。
+
+示例：
+
+```ejs
+<% if (it.date) { %>
+  日期是 <%= it.date %>
+<% } else if (it.year) { %>
+  年份是 <%= it.year %>
+<% } else { %>
+  日期和年份都不存在
+<% } %>
+```
+
+在上面的代码中，如果 `it.date` 未定义，它将检查 `it.year`。如果两者都未定义，将渲染 "既没有日期也没有年份可用"。
+
+### switch 语句
+
+[`switch` 语句](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/switch) 用于根据不同条件执行不同的操作。
+
+以下是一个示例：
+
+```ejs
+<% switch (it.rating) {
+  case 5:
+    %>优秀<%
+    break;
+  case 4:
+    %>良好<%
+    break;
+  case 3:
+    %>一般<%
+    break;
+  case 2:
+    %>及格<%
+    break;
+  default:
+    %>无可用评级<%
+} %>
+```
+
+在此代码中，将 `it.rating` 与不同的情况进行匹配，并在找到匹配项时呈现相应的值。如果没有找到匹配项，将呈现 "无可用评级"。
+
+### 三元操作符
+
+条件运算符，或称为[三元操作符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)，是一种用于根据布尔值决定为变量赋予哪个值的简写形式。它是对 `if-else` 语句的一行替代，并且也称为条件运算符。
+
+以下是一个示例：
+
+```ejs
+作者是 <%= it.author ? it.author : '未知' %>
+```
+
+在上面的代码中，如果 `it.author` 被定义，它将呈现作者的名称，否则将呈现 '未知'。
+
+对于处理未定义的值的特定用法，我们将在下一节中详细讨论。
+
+## 优雅处理未定义的值
+
+在数据世界中，并不是所有内容都总是被定义或填充好。这可能是由于各种原因，比如缺少数据、不正确的格式或跳过的条目。在创建模板时，这些未定义的值可能会导致程序停止或产生不完整的输出。因此，学习如何正确处理未定义的值成为处理模板的重要一环。在本部分中，我们将探讨如何管理和处理未定义的值，使得模板可以在一些数据点缺失的情况下平稳流畅地运行。
+
+假设您想将作者和年份添加到笔记内容中，您可以在模板中添加以下内容：
+
+```ejs filename="Note Content Template"
+<%= it.date %>; <%= it.authors %>
+```
+
+如预期，笔记内容将如下所示：
+
+```markdown
+2015; Shira Yanovsky-Dagan, Michal Avitzour, Gheona Altarescu
+```
+
+看起来不错，对吗？但如果日期或作者未定义呢？例如，在一个网页中，日期可能不可用。这种情况下，您会得到类似于这样的内容：
+
+```markdown
+; Shira Yanovsky-Dagan, Michal Avitzour, Gheona Altarescu
+```
+
+这不是我们想要的结果。那么如何确保笔记内容在没有任何数据时不仅仅被渲染为 `;` 呢？在这里，我们可以使用条件渲染：
+
+```ejs filename="Note Content Template"
+<% if ( it.date && it.authors.first() ) { %>
+  <%= it.date %>; <%= it.authors.first() %>
+<% } %>
+```
+
+在这里，我们使用 [`if` 语句](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/if...else) 检查文献是否同时具有日期和第一个作者。在这种情况下，如果项目没有任何标签，将不会渲染任何内容。您也可以使用 `if...else` 语句根据条件渲染不同的内容。
+
+```ejs filename="Note Content Template"
+<% if ( it.date && it.authors[0] ) { %>
+  <%= it.date %>; <%= it.authors[0] %>
+<% } else { %>
+  <%= it.date %><%= it.authors[0] %>
+<% } %>
+```
+
+在上面的代码中，我们使用 `else` 语句在条件不满足时渲染不带 `;` 的日期和作者。默认情况下，未定义的值会被渲染为空字符串，因此我们可以直接将它们放在一起而不担心额外的空格。
+
+另一个可能出现问题的场景是访问某个可能未定义的属性的属性值，例如，您可能希望在笔记内容中包含第一个作者的姓，如下所示：
+
+```ejs filename="Note Content Template"
+<%= it.authors.first().lastName %>
+```
+
+但如果第一个作者未定义呢？模板引擎会抛出错误并停止渲染。为了避免这种情况，您可以使用 [`?.`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Optional_chaining) 来访问属性：
+
+```ejs filename="Note Content Template"
+<%= it.authors.first()?.lastName %>
+```
+
+此外，还有一个便捷的 [`??`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator) 操作符可以用于在值不可用时指定默认值。在笔记文件名的默认模板中，您可以看到以下内容：
+
+```ejs filename="Note Filename"
+<%= it.citekey ?? it.DOI ?? it.title ?? it.key %>.md
+```
+
+我们使用此模板从 `citekey`、`DOI`、`title` 和 `key` 中获取第一个定义的值。
+
+JavaScript 还有其他许多有用的方法和运算符可以在模板中使用，我们无法在这里全部涵盖，但您可以在[速查表](/how-to/template-cheatsheet)中找到更多示例，并且您还可以在 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript) 上找到有关 JavaScript 的更多信息。
+
+在下一节中，我们将讨论如何自定义特定模板。

@@ -1,0 +1,52 @@
+---
+sidebar_position: 1
+---
+
+import { Callout } from "nextra/components";
+
+# 概述
+
+该第三方项目旨在通过为 Obsidian 和 Zotero 提供一套社区插件，促进 [Obsidian.md](https://obsidian.md) 和 [Zotero](https://www.zotero.org) 之间的整合。
+
+## 入门指南
+
+1. [安装](/getting-started/install/)
+2. [基本使用](/getting-started/basic-usage/)
+3. [高级功能](/getting-started/advanced-feature/)
+
+## 功能
+
+<Callout type="warning">
+  此插件仍在积极开发中，功能可能会发生变化，且可能未完全实现。
+</Callout>
+
+- ⚡️ 高性能
+  - 直接从Zotero数据库读取数据，无需以文本格式导出数据
+  - 在Obsidian中进行快速模糊搜索文献
+- 🔓 全面访问Zotero数据
+  - 所有数据都可以在Obsidian中获取，包括批注、笔记、标签和附件。
+  - 不受Zotero API或Better BibTeX的限制。
+- 🔨 高度可定制的模板
+  - 编写自己的模板以生成文献注释和以任何格式导入批注。
+  - 使用 [Eta](https://eta.js.org/) 提供支持，可以在模板中编写JavaScript代码来处理复杂的转换。
+  - 使用 `DetailsView` 以结构化的方式查看文献中的所有数据。
+- 🔍 批注视图
+  - 在Obsidian中查看批注，与文献笔记并排显示。
+  - 将批注拖动到文献笔记中进行导入。
+  - 始终保持最新，每当您在Zotero中更改注释时自动同步。
+- 📝 导入批注
+  - 从Zotero导入图像和文本批注到Obsidian。
+  - 保持批注与Zotero同步更新。
+- ✍️ 轻松创建文献笔记
+  - 快速切换器可创建文献笔记，并从Zotero库中的任何文献插入引文标识符。
+  - 从Zotero项目页面打开Obsidian中的文献笔记。
+
+## 免责声明
+
+本项目中的插件由第三方开发者管理，该开发者与 Obsidian 或 Zotero 无关。这意味着这些插件随时可能因 Zotero 或 Obsidian 的更新而损坏。虽然这个项目的插件并不会对你的 Zotero 数据库执行任何写入操作，但仍然存在数据丢失的风险。因此，在使用该插件之前和使用时，尤其是在使用测试版时，请妥善备份数据。
+
+## 致谢
+
+受[obsidian-citation](https://github.com/hans/obsidian-citation-plugin)、[BibNotes Formatter](https://github.com/stefanopagliari/bibnotes)和[obsidian-zotero-integration](https://github.com/mgmeyers/obsidian-zotero-integration)的启发。
+
+特别感谢[@MSBack](https://github.com/MSBack)和[@MichaTarlton](https://github.com/MichaTarlton)在文档完成之前为该项目编写教程。

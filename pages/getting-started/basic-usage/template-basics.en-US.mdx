@@ -93,6 +93,10 @@ This will render the following:
   Note here we used a tag that has no symbol next to `<%`, called "Scriptlet" tag, which is used for control-flow specifically, and produce no output. You'll find more usage of this tag in the following sections.
 </Callout>
 
+<Callout>
+  Note here we use `<% ... -%>` in favor of `<%= ... %>`, which will remove the extra newline after the tag. To learn more about this, you can read the [FAQ](/faq/slurp). 
+</Callout>
+
 ### filter
 
 You can use the [`filter` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) to filter out elements that don't meet certain criteria. For example, if you only want to include authors whose last name starts with "A", you can do:

@@ -29,7 +29,7 @@ function getCookie(
   return (cookies as LegacyMiddlewareCookies)[key]
 }
 
-export function middleware(request: NextRequest) {
+function locales(request: NextRequest) {
   const { nextUrl } = request
 
   if (/\/_meta(\.[a-z]{2}-[A-Z]{2})?$/.test(nextUrl.pathname)) {
@@ -110,3 +110,5 @@ export function middleware(request: NextRequest) {
 //     return locales(args[0]) || middleware(...args)
 //   }
 // }
+
+export { locales as middleware }

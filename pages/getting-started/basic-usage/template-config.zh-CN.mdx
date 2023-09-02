@@ -1,0 +1,293 @@
+import { Callout, Steps } from "nextra/components";
+import Image from "next/image";
+
+# 配置模板
+
+您可以通过在 Obsidian 中导航到“设置”选项卡 > “Templates”来访问模板设置。有两种类型的模板可供使用：
+
+1. 简单模板：可直接在设置选项卡中进行编辑。
+2. 高级模板（可弹出）：保存为 markdown 模板文件，需要保存到模板文件夹进行进一步编辑。
+
+对于我们的模板，我们使用的是 [eta](https://eta.js.org/) 模板引擎，这与 [Templater](https://github.com/SilentVoid13/Templater) 插件使用的模版引擎十分类似。
+
+## 编辑简单模板
+
+为了简单起见，让我们从一个简单模板开始。例如，如果您只想在笔记文件名中包含标题，您可以将默认模板替换为以下内容，并按下“Apply”按钮：
+
+```js filename="Note Filename"
+<%= it.title %>.md
+```
+
+## 编辑复杂模板
+
+对于更复杂的定制，比如笔记内容，您需要使用 markdown 模板文件进行编辑，这些文件需要在保存到模板文件夹之前不能进行编辑。
+
+![打开可弹出模板编辑器](/img/setting-ejectable-template.png)
+
+<Steps>
+
+### 打开模板设置
+
+导航到 Obsidian 的“模板” > “Ejectable”选项卡
+
+### 弹出模板文件
+
+单击“Eject”按钮，将模板文件弹出到模板文件夹中。
+
+<Callout>默认情况下，模板保存在 `ZtTemplates` 文件夹中。</Callout>
+
+### 打开“笔记内容”模板编辑器
+
+单击模板文件路径旁边的“Open Template File”按钮，以打开模板编辑器。
+
+### 编辑模板
+
+第一列是模板文件编辑器，我们可以在其中编辑模板。稍后我们将讨论其他两列的内容。
+
+</Steps>
+
+## 使用实时模板编辑器
+
+为了使模板编辑过程更简单，我们提供了一个实时模板编辑器。您刚刚在上一步中打开了它。实时模板编辑器是一个分割视图，左侧是模板文件编辑器，右侧是预览。
+
+如果您还没有选择任何项目，预览将为空白。要选择一个项目：
+
+<Steps>
+
+### 在 Obsidian 中打开标注面板
+
+我们稍后将详细讨论标注面板的用法，现在我们只需要它来选择一个项目进行预览。
+
+1. 打开命令面板
+2. 选择“Open Zotero Annotation View in Side Panel”命令
+
+![打开标注视图](/img/open-annotation-view.png)
+
+您应该会看到标注面板打开在屏幕右边。
+
+### 选择要预览的文献
+
+<Image
+  src="/img/annot-view-pick-literature.png"
+  alt="在标注视图中选择文献"
+  width="500"
+  height="0"
+/>
+
+1. 点击“Choose Follow Mode”按钮
+2. 选择“Link with Selected Literature”选项
+3. 在弹出的搜索框中选择一篇文献
+
+您应该会看到预览随着所选的文献更新。
+
+### 选择用于预览的文献
+
+<Image
+  src="/img/annot-view-show-details.png"
+  alt="在标注视图中显示详细信息"
+  width="300"
+  height="0"
+/>
+
+点击顶部左侧的“Show details”按钮，您应该会看到所选文献的详细信息在编辑器中打开。
+
+</Steps>
+
+完整的模板编辑器如下所示：
+
+![模板编辑器](/img/template-editor.png)
+
+在模板编辑器中，您可以：
+
+- 在左侧编辑模板文件
+- 使用所选项目的数据在中间预览模板
+- 查看所选项目的所有可用数据在右侧
+
+我们将在下面的章节中向您展示如何使用这些功能。
+
+## 定制化每个模板
+
+### 配置笔记属性模板
+
+让我们从“笔记属性”模板开始。默认模板如下所示：
+
+```ejs filename="Note Properties"
+title: "<%= it.title %>"
+citekey: "<%= it.citekey %>"
+```
+
+这是一个 [YAML](https://yaml.org/) 模板。它用于设置笔记的 [元信息](https://help.obsidian.md/Editing+and+formatting/Properties)。您可以在此模板中添加任何您想要的元信息。
+
+<Callout>
+请注意模板中的带引号的 `<%= it.title %>` 和 `<%= it.citekey %>`。对于大多数标量数据，您不需要任何引号，但如果您需要定义一些包含可能与 YAML 语法混淆的字符的数据，您需要使用双引号“”或单引号''将其引用为有效的 YAML 文件。简单规则是，如果您的数据包含以下任何字符 `:-{}[]!#|>&%@` ，最好将其引用。如果您想要一个字符串，但它可能被错误地解释为有效的数字（整数或浮点数），或者如果它仅包含“Yes”、“No”、“yes”、“no”、“true”或“false”这些内容，而不是有效的布尔值时，也应该进行引用。
+</Callout>
+
+例如，如果您想要在元信息中添加 `tags` 字段，您可以将以下行添加到模板中：
+
+```ejs filename="Note Properties" copy
+tags: [<%= it.tags %>]
+```
+
+在这个示例中，我们使用 `[]` 将 `tags` 字段包裹起来，以确保包含空格字符的标签如 `my tag` 能够被正确解析。如果您的标签可能包含之前提到的 `[]` 或 `,` 等特殊字符，则可以使用 `JSON.stringify` 进行转义：
+
+```ejs filename="Note Properties" copy
+tags: <%= JSON.stringify(it.tags) %>
+```
+
+有关更多“笔记属性模板”的示例，请参考 [How-to](/how-to/note-property-template) 部分。
+
+<Callout>
+
+此模板在应用于笔记之前使用 Obsidian 的内置 YAML 解析器进行解析。您可能会注意到生成的元信息与模板并不完全相同。
+
+您可以放心地放置一个可能不存在的字段，因为在应用于笔记之前，它将被剔除掉。
+
+</Callout>
+
+
+### 更新笔记正文模板
+
+默认模板如下所示：
+
+```ejs filename="Note Content"
+# <%= it.title %>
+
+[Zotero](<%= it.backlink %>) <%= it.fileLink %>
+<%~ include("annots", it.annotations) %>
+```
+
+假设我们想要在笔记正文中包含文献的摘要。如果您已经用所选的文献打开了模板编辑器，您应该会在项目详细信息预览中看到 `abstractNote`，如下所示。您可以右键单击 `abstractNote` 并选择“Copy Template (Pick first element)”将模板代码复制到剪贴板。
+
+![从详细视图中复制摘要模板](/img/template-editor-copy-1.png)
+
+将其粘贴到模板文件编辑器中的 `[!note]` 中以替换它。您的模板应该如下所示：
+
+```ejs filename="Note Content"
+# <%= it.title %>
+
+[Zotero](<%= it.backlink %>) <%= it.fileLink %>
+<%= it.abstractNote.first() %>
+```
+
+您应该会看到模板预览随着摘要的更新而更新。
+
+### 更新每个标注的模板
+
+假设您选择的文献有标注，您应该会看到标注面板中填充了标注，如下所示：
+
+<Image
+  src="/img/annot-view-show-details.png"
+  alt="在标注视图中显示详细信息"
+  width="300"
+  height="0"
+/>
+
+您可以点击每个标注标题栏上的 `Show Details` 按钮预览该标注的详情。
+
+每个标注的默认模板如下所示：
+
+```ejs filename="annotation"
+[!note] Page <%= it.pageLabel %>
+
+<%= it.imgEmbed %><%= it.text %>
+<% if (it.comment) { %>
+---
+<%= it.comment %>
+<% } %>
+```
+
+默认情况下，标注被渲染为带有块 ID 的[标注](https://help.obsidian.md/Editing+and+formatting/Callouts)，以便插件可以跟踪它们进行未来更新：
+
+```markdown
+> [!note] Page 1
+> ![](image-excerpt.png)Some Excerpt
+>
+> ---
+>
+> This is a comment
+> ^LUE86KQFaF39HNRLZp2
+```
+
+假设您希望以调用类型作为标注类型而不是“note”添加颜色，您可以在标注中找到两个关于颜色的变量：`color` 和 `colorName`。在这里，我们使用 `colorName`，这是可读性更好的颜色名称而不是颜色码。右键单击 `abstractNote` 并选择“Copy Template”。
+
+![从详细视图中复制颜色模板](/img/template-editor-copy-2.png)
+
+将其粘贴到 `[!note]` 中以替换它。您的模板应如下所示：
+
+```ejs filename="annotation"
+[!<%= it.colorName %>] Page <%= it.pageLabel %>
+...
+```
+
+您应该会看到预览随着颜色名称的更新而更新。
+
+此外，如果您想要将文献的标题添加到标注中，您在标注详情中找不到它。相反，您可以在父文献的详细信息中找到它，存储在 `it.docItem` 中。因此，要添加标题，您可以在标注模板中使用 `<%= it.docItem.title %>`。
+
+<Callout>
+
+如果您想要检查所属文献的详细信息，您可以使用模板预览面板标题栏上的切换按钮。在这种情况下，您可以点击“打开笔记模板”按钮切换到所属文献查看详细信息。
+
+<Image
+  src="/img/template-editor-switch-1.png"
+  alt="切换到笔记模板"
+  width="400"
+  height="0"
+/>
+
+</Callout>
+
+### 批量导入标注的模板
+
+您可能会注意到在“笔记内容”模板中有 `<%~ include("annots", it.annotations) %>`。这是一个特殊的语法，用于使用另一个模板。在这种情况下，它是为批量导入标注而命名为 `annots` 的模板。
+
+首先，让我们点击“打开标注模板”按钮打开标注的模板编辑器。
+
+<Image
+  src="/img/template-editor-switch-2.png"
+  alt="切换到标注模板"
+  width="400"
+  height="0"
+/>
+
+标注的默认模板如下所示：
+
+```ejs filename="annots"
+<% for (const annotation of it) { %>
+<%~ include("annotation", annotation) %>
+<% } %>
+```
+
+这是一个循环模板。它循环遍历所有的标注，并将每个标注传递给 `annotation` 模板。`annotation` 模板是我们在前面一节中编辑的模板。
+
+现在，假设我们想在每个标注之间添加一个分隔符。我们可以在 `annots` 模板中添加一个分隔符：
+
+```ejs filename="annots" copy
+<% for (const annotation of it) { %>
+<%~ include("annotation", annotation) %>
+
+---
+<% } %>
+```
+
+您应该会看到预览中的每个标注之间添加了分隔符。
+
+这就是有关在 Obsidian-Zotero 中定制化模板的全部内容。在下一节中，我们将深入探讨如何使您的文献笔记与 Zotero 中的最新更改保持同步。
+
+<Callout type="info">
+  **Partial模板**
+
+  我们使用 [Partial](https://eta.js.org/docs/intro/template-syntax#partials-and-layouts) 和 `include` 函数来重用模板的某些部分。
+
+  你可以将需要重用的文件放在模板文件夹中，后缀名设置为 `.eta`，在模板中用文件名引用他们，比如 `part.eta.md` 可以使用以下语法引用：
+
+  ```ejs filename="Note Content" copy
+  <%~ include("part", it) %>
+  ```
+
+  注意，以下名字是保留的，不能用于模板文件名：
+  - `annots` - 用于批量导入标注
+  - `annotation` - 用于单个标注
+  - `note` - 用于文献详细信息
+  - `field` - 用于文献元信息
+
+</Callout>

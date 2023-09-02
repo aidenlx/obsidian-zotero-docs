@@ -1,0 +1,84 @@
+import Image from "next/image";
+import { Steps, Callout } from "nextra-theme-docs";
+
+# 批注视图
+
+批注视图是这个集成的关键组成部分，使您能够直接在 Obsidian 中查看导入的批注，并与文献笔记并排显示。此功能专门设计用于简化将批注与笔记内容进行交叉引用的过程。
+
+如果您已经按照我们之前的章节进行操作，您将会记得我们已经简要地使用了 PDF 批注视图功能。我们之前在访问文献详细信息时曾经使用过它，以帮助您更高效地编辑模板。不过，批注视图还有更多功能，我们将要探索它的全部潜力。
+
+## 启动 PDF 批注视图
+
+要激活批注视图，您可以打开命令面板，并选择“Open Zotero Annotation View in Side Panel”命令。然后，批注视图将出现在 Obsidian 工作区的右侧。
+
+![打开批注视图](/img/open-annotation-view.png)
+
+## 绑定特定文献
+
+当您打开批注视图时，您可能会看到一个空白屏幕。这是因为批注视图默认处于跟随模式。在此模式下，批注视图将跟随 Obsidian 工作区中活动的文献笔记。
+
+如果您想要在一个单独的笔记中总结文献，这个时候笔记不一定与一篇文献绑定，这个时候您可以使用“Choose Follow Mode”按钮来更改跟随模式，在批注视图中查看特定文献的批注
+
+1. 点击“Choose Follow Mode”按钮
+2. 选择“Link with Selected Literature”选项
+3. 在弹出的搜索框中选择文献
+
+<Image
+  src="/img/annot-view-pick-literature.png"
+  alt="在批注视图中选择文献"
+  width="500"
+  height="0"
+/>
+
+您应该可以看到所选文献的预览已更新。
+
+## 跟随 Zotero 阅读器
+
+<Callout info="warning">
+
+注意，当前版本的插件与 Zotero 7 最新版本不兼容。请等待插件更新修复，或者使用 Zotero 6。
+
+</Callout>
+
+此外，您还可以跟随 Zotero PDF 阅读器。这对于快速访问您正在阅读的当前页面的批注非常有用。
+
+<Steps>
+### 在 Obsidian 中启用背景连接
+
+在 Obsidian 中，导航到“设置”选项卡 > “Connect” > “Background Connect”，然后切换到“启用”。
+
+![在 Obsidian 中启用背景连接](/img/connect-cfg-obsidian.png)
+
+### 在 Zotero 中启用背景连接
+
+在 Zotero 中，转到“设置” > “Obsidian Zotero” > “Notify”，然后切换到“Enable Notify”。
+
+![在 Zotero 中启用背景连接](/img/bg-connect-zotero.png)
+
+确保端口号与 Obsidian 中的端口号相匹配。
+
+### 启用“跟随 Zotero 阅读器”模式
+
+在批注视图中，按照上述步骤操作，但选择“Follow Active Literature in Zotero Reader”选项。
+
+现在，批注视图将跟踪您在 Zotero PDF 阅读器中正在阅读的当前页面。
+
+</Steps>
+
+## 通过拖放导入批注
+
+批注视图的界面与 Zotero PDF 阅读器非常相似。要将批注导入到您的笔记中，您只需将批注从批注视图中拖放到您的笔记中，使用您在上一章中配置的相同模板。
+
+为此，您只需按住批注视图中每个批注左上角的图标，并将其拖放到您的笔记中。
+
+---
+
+<video autoPlay loop muted playsInline>
+  <source src="/img/annot-view-dnd.mp4" type="video/mp4" />
+  <Image
+    src="/img/annot-view-dnd.gif"
+    alt="批注视图拖放"
+    width="1080"
+    height="0"
+  />
+</video>
