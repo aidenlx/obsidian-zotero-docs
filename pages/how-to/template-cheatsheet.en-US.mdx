@@ -1,5 +1,27 @@
 # Template Cheatsheet
 
+Leave your common usage in the comment section below and we will add them to the list.
+
+## Authors [#authors]
+
+### Get author shorthand [#authors-shorthand]
+
+```ejs filename="Note Content" copy
+[authors:: <%= it.authorsShort %>]
+```
+
+It will be rendered like `[authors:: Gerasimavicius et al.]`.
+
+## Abstract [#abstract]
+
+### Get abstract in a single paragraph [#abstract-oneline]
+
+```ejs filename="Note Content" copy
+## Abstract
+
+<%= it.abstractNote.first().replace(/[\r\n]+/g, " ") %>
+```
+
 ## Grouping [#grouping]
 
 For details, see [Object.groupBy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy) and [Map.groupBy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/groupBy).

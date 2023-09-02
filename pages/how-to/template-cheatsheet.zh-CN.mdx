@@ -1,5 +1,27 @@
 # 模板速查表
 
+请在下方评论区留下您的经常用的模板，我们将把它们添加到列表中。
+
+## 作者 [#authors]
+
+### 作者缩写 [#authors-shorthand]
+
+```ejs filename="Note Content" copy
+[authors:: <%= it.authorsShort %>]
+```
+
+渲染结果类似 `[authors:: Gerasimavicius et al.]`。
+
+## 摘要 [#abstract]
+
+### 摘要输出为单行 [#abstract-oneline]
+
+```ejs filename="Note Content" copy
+## 摘要
+
+<%= it.abstractNote.first().replace(/[\r\n]+/g, " ") %>
+```
+
 ## 分组 [#grouping]
 
 详见 [Object.groupBy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy) 和 [Map.groupBy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Map/groupBy)
