@@ -1,10 +1,10 @@
 # 模板速查表
 
-## 分组
+## 分组 [#grouping]
 
 详见 [Object.groupBy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy) 和 [Map.groupBy](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Map/groupBy)
 
-### 按批注颜色分组
+### 按批注颜色分组 [#group-by-annotation-color]
 
 ```ejs filename="annotations" copy
 <% const byColor = Object.groupBy(it, (annot) => annot.colorName); 
@@ -18,7 +18,7 @@ for (const color in byColor) { -%>
 <% } %>
 ```
 
-### 按批注颜色分组（自定义颜色名称）
+### 按批注颜色分组（自定义颜色名称） [#group-by-annotation-color-customized-label]
   
 ```ejs filename="annotations" copy
 <% const byColor = Object.groupBy(it, (annot) => annot.colorName);

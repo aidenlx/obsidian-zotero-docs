@@ -3,7 +3,7 @@
 When you're working with eta scripts, white space and newlines can sometimes become an issue. 
 By default, the script will preserve all whitespace and newlines from your templates, which can lead to unexpected results in your rendered markdown.
 
-### Why Extra Empty Lines May Be Introduced:
+## Why Extra Empty Lines May Be Introduced [#why]
 
 When you embed JavaScript inside an Eta tag, such as `<%`, even if that block doesn't produce any output directly, it can introduce extra whitespace and newlines in the rendered output.
 
@@ -26,7 +26,7 @@ The above template might result in:
 
 Notice the extra empty line? It's there because Eta retains the newline after the `<% if (true) { %>` and also the one after the closing `<% } %>`. This is often not what you'd expect or want.
 
-### Solving with `-%>`:
+## Solving with `-%>` [#solution]
 
 Eta provides a solution to control this whitespace with the `-%>` ending tag. The dash (`-`) before the `%>` indicates that any newline immediately following the closing tag should be trimmed. 
 
@@ -48,7 +48,7 @@ Now, this would render:
 
 The extra empty line after `- Hello` has been removed.
 
-### Recap
+## Recap [#recap]
 
 When `autoTrim` is disabled, the default behavior of Eta is to preserve all whitespace and newlines, which can introduce unexpected empty lines in the output. 
 But you can control this behavior by using the `<%-` opening tag or the `-%>` ending tag.

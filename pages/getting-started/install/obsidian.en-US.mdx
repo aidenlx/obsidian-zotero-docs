@@ -12,11 +12,11 @@ import ObsidianInstall from "@/components/install/obsidian/main.en-US";
 export const getStaticProps = () =>
   getSSGProps().then((ssg) => ({ props: { ssg }, revalidate: 60 }));
 
-## Install Plugin
+## Install Plugin [#install]
 
 <ObsidianInstall />
 
-## Basic Setup
+## Basic Setup [#basic-setup]
 
 Unlike other citation plugins, this plugin read Zotero's database directly to deliver the
 best performance with full access to Zotero's data.
@@ -25,7 +25,7 @@ To use this plugin, some additional setup is required:
 
 <Steps>
 
-### Download Binary
+### Download Binary [#download-binary]
 
 The plugin requires a binary (`better-sqlite3`) to connect to Zotero's database. Normally,
 a modal will pop up the first time you open the plugin, and ask you to download the binary. Follow the instructions in the modal to download the binary.
@@ -34,7 +34,7 @@ a modal will pop up the first time you open the plugin, and ask you to download 
 
 This modal will also show up if the binary is broken or outdated, so that you can reset or update the binary.
 
-### Locate Zotero's Database
+### Locate Zotero's Database [#locate-zotero-database]
 
 The plugin needs to know where Zotero's database is located. If you haven't moved your Zotero's database to a different location, the plugin should be able to locate it automatically. In the `Settings` > `Connect`, you should see a path to your Zotero's database marked green. (If you've installed Better BibTex in Zotero, the path will also be green.)
 

@@ -6,7 +6,7 @@ import { Callout, Steps } from "nextra/components";
 
 对于我们的模板，我们使用 [eta](https://eta.js.org/) 模板引擎。本节中，我们将介绍模板语言的基础知识。如果您已经熟悉 eta，可以跳过本节。
 
-## 基础知识
+## 基础知识 [#basics]
 
 为了简单起见，让我们从一个简单的模板开始。假设您只想在笔记文件名中包含标题，您可以使用以下模板：
 
@@ -24,7 +24,7 @@ Eta 的优点在于标签内的字符串将作为 JavaScript 代码进行求值�
 <%= it.title + "_我是后缀" %>.md
 ```
 
-## 处理模板中的列表
+## 处理模板中的列表 [#processing-lists]
 
 在我们的数据中，可能出现包含作者、标签等项目的列表。这些列表在 JavaScript 中通常表示为数组。为了有效地利用这些数组进行模板处理，我们需要了解可以与它们一起使用的各种操作和方法。
 
@@ -53,7 +53,7 @@ Shira Yanovsky-Dagan,Michal Avitzour,Gheona Altarescu
 
 数组内置了一些方法，您可以在[此处](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array#instance_methods)找到完整的列表。在[速查表](/how-to/template-cheatsheet)中，您可以找到更多示例模板，这里我们只讨论最有用的一些。
 
-### join
+### join [#array-join]
 
 您可以使用 [`join` 方法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/join)将数组连接成一个字符串，例如：
 
@@ -67,7 +67,7 @@ Shira Yanovsky-Dagan,Michal Avitzour,Gheona Altarescu
 Shira Yanovsky-Dagan, Michal Avitzour, Gheona Altarescu
 ```
 
-### forEach
+### forEach [#array-foreach]
 
 您可以使用 [`forEach` 方法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)来遍历数组并渲染每个元素，例如：
 
@@ -95,7 +95,7 @@ Shira Yanovsky-Dagan, Michal Avitzour, Gheona Altarescu
   请注意，我们使用的是 `<% ... -%>` 而不是 `<%= ... %>`。这是因为我们不想要在每个作者之间添加额外的空行。关于这个问题的更多信息，请参阅 [FAQ](/faq/slurp)。
 </Callout>
 
-### filter
+### filter [#array-filter]
 
 您可以使用 [`filter` 方法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)来过滤不满足特定条件的元素。例如，如果您只想包含姓氏以字母 "A" 开头的作者，可以使用以下方法：
 
@@ -103,13 +103,13 @@ Shira Yanovsky-Dagan, Michal Avitzour, Gheona Altarescu
 <%= it.authors.filter(author => author.lastName.startsWith("A")) %>
 ```
 
-## 控制流管理
+## 控制流管理 [#control-flow]
 
 在编写模板时，您可能会遇到根据不同条件生成不同输出的情况。这时就需要使用控制流。
 
 为了处理这些逻辑情况，我们可以使用不同的 JavaScript 构造，如 `if`、`else`、`else if`、`switch` 和三元操作符等。让我们通过示例讨论每种情况。
 
-### If...else 语句
+### If...else 语句 [#if-else]
 
 在 JavaScript 中，使用 `if` 关键字后跟括号中的条件，以及如果条件为 true 时要执行的代码（位于大括号 `{}` 内）来编写 [`if` 语句](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/if...else)。
 
@@ -153,7 +153,7 @@ Shira Yanovsky-Dagan, Michal Avitzour, Gheona Altarescu
 
 在上面的代码中，如果 `it.date` 未定义，它将检查 `it.year`。如果两者都未定义，将渲染 "既没有日期也没有年份可用"。
 
-### switch 语句
+### switch 语句 [#switch]
 
 [`switch` 语句](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/switch) 用于根据不同条件执行不同的操作。
 
@@ -180,7 +180,7 @@ Shira Yanovsky-Dagan, Michal Avitzour, Gheona Altarescu
 
 在此代码中，将 `it.rating` 与不同的情况进行匹配，并在找到匹配项时呈现相应的值。如果没有找到匹配项，将呈现 "无可用评级"。
 
-### 三元操作符
+### 三元操作符 [#ternary]
 
 条件运算符，或称为[三元操作符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)，是一种用于根据布尔值决定为变量赋予哪个值的简写形式。它是对 `if-else` 语句的一行替代，并且也称为条件运算符。
 
@@ -194,7 +194,7 @@ Shira Yanovsky-Dagan, Michal Avitzour, Gheona Altarescu
 
 对于处理未定义的值的特定用法，我们将在下一节中详细讨论。
 
-## 优雅处理未定义的值
+## 优雅处理未定义的值 [#handle-undefined]
 
 在数据世界中，并不是所有内容都总是被定义或填充好。这可能是由于各种原因，比如缺少数据、不正确的格式或跳过的条目。在创建模板时，这些未定义的值可能会导致程序停止或产生不完整的输出。因此，学习如何正确处理未定义的值成为处理模板的重要一环。在本部分中，我们将探讨如何管理和处理未定义的值，使得模板可以在一些数据点缺失的情况下平稳流畅地运行。
 

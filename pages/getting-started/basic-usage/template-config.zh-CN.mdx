@@ -10,7 +10,7 @@ import Image from "next/image";
 
 对于我们的模板，我们使用的是 [eta](https://eta.js.org/) 模板引擎，这与 [Templater](https://github.com/SilentVoid13/Templater) 插件使用的模版引擎十分类似。
 
-## 编辑简单模板
+## 编辑简单模板 [#edit-simple-template]
 
 为了简单起见，让我们从一个简单模板开始。例如，如果您只想在笔记文件名中包含标题，您可以将默认模板替换为以下内容，并按下“Apply”按钮：
 
@@ -18,7 +18,7 @@ import Image from "next/image";
 <%= it.title %>.md
 ```
 
-## 编辑复杂模板
+## 编辑复杂模板 [#edit-complex-template]
 
 对于更复杂的定制，比如笔记内容，您需要使用 markdown 模板文件进行编辑，这些文件需要在保存到模板文件夹之前不能进行编辑。
 
@@ -26,27 +26,27 @@ import Image from "next/image";
 
 <Steps>
 
-### 打开模板设置
+### 打开模板设置 [#open-template-settings]
 
 导航到 Obsidian 的“模板” > “Ejectable”选项卡
 
-### 弹出模板文件
+### 弹出模板文件 [#eject-template-file]
 
 单击“Eject”按钮，将模板文件弹出到模板文件夹中。
 
 <Callout>默认情况下，模板保存在 `ZtTemplates` 文件夹中。</Callout>
 
-### 打开“笔记内容”模板编辑器
+### 打开“笔记内容”模板编辑器 [#open-template-editor]
 
 单击模板文件路径旁边的“Open Template File”按钮，以打开模板编辑器。
 
-### 编辑模板
+### 编辑模板 [#edit-template]
 
 第一列是模板文件编辑器，我们可以在其中编辑模板。稍后我们将讨论其他两列的内容。
 
 </Steps>
 
-## 使用实时模板编辑器
+## 使用实时模板编辑器 [#live-template-editor]
 
 为了使模板编辑过程更简单，我们提供了一个实时模板编辑器。您刚刚在上一步中打开了它。实时模板编辑器是一个分割视图，左侧是模板文件编辑器，右侧是预览。
 
@@ -54,7 +54,7 @@ import Image from "next/image";
 
 <Steps>
 
-### 在 Obsidian 中打开标注面板
+### 在 Obsidian 中打开标注面板 [#open-annot-panel]
 
 我们稍后将详细讨论标注面板的用法，现在我们只需要它来选择一个项目进行预览。
 
@@ -65,7 +65,7 @@ import Image from "next/image";
 
 您应该会看到标注面板打开在屏幕右边。
 
-### 选择要预览的文献
+### 选择要预览的文献 [#pick-preview-literature]
 
 <Image
   src="/img/annot-view-pick-literature.png"
@@ -80,7 +80,7 @@ import Image from "next/image";
 
 您应该会看到预览随着所选的文献更新。
 
-### 选择用于预览的文献
+### 选择用于预览的文献 [#preview-item-details]
 
 <Image
   src="/img/annot-view-show-details.png"
@@ -105,9 +105,9 @@ import Image from "next/image";
 
 我们将在下面的章节中向您展示如何使用这些功能。
 
-## 定制化每个模板
+## 设置模板 [#customize-template]
 
-### 配置笔记属性模板
+### 笔记属性模板 [#note-properties-template]
 
 让我们从“笔记属性”模板开始。默认模板如下所示：
 
@@ -145,7 +145,7 @@ tags: <%= JSON.stringify(it.tags) %>
 </Callout>
 
 
-### 更新笔记正文模板
+### 笔记正文模板 [#note-content-template]
 
 默认模板如下所示：
 
@@ -171,7 +171,7 @@ tags: <%= JSON.stringify(it.tags) %>
 
 您应该会看到模板预览随着摘要的更新而更新。
 
-### 更新每个标注的模板
+### PDF 批注模板 [#note-annot-template]
 
 假设您选择的文献有标注，您应该会看到标注面板中填充了标注，如下所示：
 
@@ -221,7 +221,7 @@ tags: <%= JSON.stringify(it.tags) %>
 
 您应该会看到预览随着颜色名称的更新而更新。
 
-此外，如果您想要将文献的标题添加到标注中，您在标注详情中找不到它。相反，您可以在父文献的详细信息中找到它，存储在 `it.docItem` 中。因此，要添加标题，您可以在标注模板中使用 `<%= it.docItem.title %>`。
+此外，如果您想要将文献的标题添加到标注中，您在标注详情中找不到它。相反，您可以在所属文献的详细信息中找到它，存储在 `it.docItem` 中。因此，要添加标题，您可以在标注模板中使用 `<%= it.docItem.title %>`。
 
 <Callout>
 
@@ -236,9 +236,9 @@ tags: <%= JSON.stringify(it.tags) %>
 
 </Callout>
 
-### 批量导入标注的模板
+### 批量导入批注的模板 [#note-annots-template]
 
-您可能会注意到在“笔记内容”模板中有 `<%~ include("annots", it.annotations) %>`。这是一个特殊的语法，用于使用另一个模板。在这种情况下，它是为批量导入标注而命名为 `annots` 的模板。
+您可能会注意到在“笔记内容”模板中有 `<%~ include("annots", it.annotations) %>`。这是一个[特殊的语法](#partial-templates)，用于使用另一个模板。在这种情况下，它是为批量导入标注而命名为 `annots` 的模板。
 
 首先，让我们点击“打开标注模板”按钮打开标注的模板编辑器。
 
@@ -249,7 +249,7 @@ tags: <%= JSON.stringify(it.tags) %>
   height="0"
 />
 
-标注的默认模板如下所示：
+默认模板如下所示：
 
 ```ejs filename="annots"
 <% for (const annotation of it) { %>
@@ -273,18 +273,20 @@ tags: <%= JSON.stringify(it.tags) %>
 
 这就是有关在 Obsidian-Zotero 中定制化模板的全部内容。在下一节中，我们将深入探讨如何使您的文献笔记与 Zotero 中的最新更改保持同步。
 
+## Partial模板 [#partial-templates]
+
+我们使用 [Partial](https://eta.js.org/docs/intro/template-syntax#partials-and-layouts) 和 `include` 函数来重用模板的某些部分。
+
+你可以将需要重用的文件放在模板文件夹中，后缀名设置为 `.eta`，在模板中用文件名引用他们，比如 `part.eta.md` 可以使用以下语法引用：
+
+```ejs filename="Note Content" copy
+<%~ include("part", it) %>
+```
+
 <Callout type="info">
-  **Partial模板**
 
-  我们使用 [Partial](https://eta.js.org/docs/intro/template-syntax#partials-and-layouts) 和 `include` 函数来重用模板的某些部分。
+  注意，以下名字是保留的，不能用于模板文件名
 
-  你可以将需要重用的文件放在模板文件夹中，后缀名设置为 `.eta`，在模板中用文件名引用他们，比如 `part.eta.md` 可以使用以下语法引用：
-
-  ```ejs filename="Note Content" copy
-  <%~ include("part", it) %>
-  ```
-
-  注意，以下名字是保留的，不能用于模板文件名：
   - `annots` - 用于批量导入标注
   - `annotation` - 用于单个标注
   - `note` - 用于文献详细信息

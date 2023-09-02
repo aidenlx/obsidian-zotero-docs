@@ -6,7 +6,7 @@ As you dive deeper into using obsidian-zotero, you'll find that having the abili
 
 For our templates, we use the [eta](https://eta.js.org/) template engine. We'll discuss the basics of template language in this section. If you're already familiar with eta, you can skip this section.
 
-## Basics
+## Basics [#basics]
 
 For the sake of simplicity, let's start with a simple template. As an example, if you want to include only the title in the note filename, you can use the following template:
 
@@ -24,7 +24,7 @@ The beauty of eta is that the string inside the tags is evaluated as JavaScript 
 <%= it.title + "_suffix" %>.md
 ```
 
-## Processing Lists in Templates
+## Processing Lists in Templates [#processing-lists]
 
 In our data, there may be instances where we have a list of items such as authors, tags, or categories. This list is often presented as an array in JavaScript. To effectively utilize these arrays in our templates, we need to understand a variety of operations and methods that can be used with them.
 
@@ -55,7 +55,7 @@ However, there may be times when you only want to include the first author or th
 
 There are a handful of method bulti-in to the Array, in which you can find the full list [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#instance_methods). You can find example templates in the [cheatsheet](/how-to/template-cheatsheet), here we only discuss the most useful ones.
 
-### Join
+### Join [#array-join]
 
 To join the array into a string, you can use the [`join` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join), for example:
 
@@ -69,7 +69,7 @@ This way the result will have a space after each comma between each author:
 Shira Yanovsky-Dagan, Michal Avitzour, Gheona Altarescu
 ```
 
-### forEach
+### forEach [#array-foreach]
 
 You can use the [`forEach` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach) to iterate through the array and render each element, for example:
 
@@ -97,7 +97,7 @@ This will render the following:
   Note here we use `<% ... -%>` in favor of `<%= ... %>`, which will remove the extra newline after the tag. To learn more about this, you can read the [FAQ](/faq/slurp). 
 </Callout>
 
-### filter
+### filter [#array-filter]
 
 You can use the [`filter` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) to filter out elements that don't meet certain criteria. For example, if you only want to include authors whose last name starts with "A", you can do:
 
@@ -105,13 +105,13 @@ You can use the [`filter` method](https://developer.mozilla.org/en-US/docs/Web/J
 <%= it.authors.filter(author => author.lastName.startsWith("A")) %>
 ```
 
-## Managing Logic - Control Flow in Templates
+## Managing Logic - Control Flow in Templates [#control-flow]
 
 While writing templates, you may come across scenarios where you want to have different outputs based on different conditions. This is where control flow comes into play.
 
 To handle these logical scenarios, we can use different JavaScript constructs like `if`, `else`, `else if`, `switch`, and `ternary` operators. Let's discuss each of them with the help of examples.
 
-### If...else Statement
+### If...else Statement [#if-else]
 
 An [`if` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else) in JavaScript is written with the `if` keyword, followed by a condition in parentheses, and the code to be executed if the condition is true, inside curly brackets `{}`.
 
@@ -155,7 +155,7 @@ Example:
 
 In the above code, if `it.date` is not defined, it checks for `it.year`. If neither is defined, it renders "Neither date nor year is available".
 
-### Switch Statement
+### Switch Statement [#switch]
 
 The [`switch` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch) is used to perform different actions based on different conditions. 
 
@@ -182,7 +182,7 @@ Here's an example:
 
 In this code, `it.rating` is compared with different cases, and when a match is found, it renders the corresponding value. If no match is found, it renders "No rating available".
 
-### Ternary Operator
+### Ternary Operator [#ternary]
 
 The Conditional operator, or [ternary operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) is a shorthand for an `if` statement and is used when you want to decide which value to assign to a variable based on a Boolean value. It's a one-liner replacement for an `if-else` statement and is also known as the conditional operator.
 
@@ -196,7 +196,7 @@ In the above code, if `it.author` is defined, it will render the author's name, 
 
 For this specific usage of handling undefined values, we will discuss in details in the next section.
 
-## Graceful Handling of Undefined Values
+## Graceful Handling of Undefined Values [#handle-undefined]
 
 In the world of data, not everything is always defined or filled out. This could be due to a variety of reasons, such as missing data, improper formatting, or skipped entries. When you are creating templates, these undefined values could cause your program to halt or result in incomplete outputs. Therefore, learning how to properly handle undefined values becomes an integral part of working with templates. In this part, we will delve into how to manage and maneuver around undefined values, allowing your templates to operate smoothly and gracefully even when some data points are missing.
 

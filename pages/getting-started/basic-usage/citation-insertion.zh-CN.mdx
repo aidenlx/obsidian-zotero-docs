@@ -5,7 +5,7 @@ import Image from "next/image";
 
 使用 obsidian-zotero 插件，您可以轻松地在笔记中使用命令或编辑器补全插入引用。
 
-## 编辑器补全
+## 编辑器补全 [#editor-suggest]
 
 <video autoPlay loop muted playsInline width="300">
   <source src="/img/citation-insert-editor.mp4" type="video/mp4" />
@@ -19,17 +19,17 @@ import Image from "next/image";
 
 <Steps>
 
-### 触发引用补全
+### 触发引用补全 [#trigger-citations-suggest]
 
 在您的笔记中键入 `[@`，您将看到一系列可供选择的引用。
 
-### 搜索引用
+### 搜索引用 [#search-for-citation]
 
 您可以继续键入来搜索引用。
 
 目前您可以通过标题、作者和年份进行搜索。
 
-### 插入引用
+### 插入引用 [#insert-citation]
 
 选择要插入的文献，然后按下 `Enter` 键插入它的引用。默认情况下，它将以 [Pandoc 引用格式](https://pandoc.org/MANUAL.html#extension-citations) (`[@citekey]`) 插入引用。
 
@@ -41,7 +41,7 @@ import Image from "next/image";
 
 可以在插件设置中配置引用格式。请查看[前一节](/getting-started/basic-usage/template-config)以获取更多详情。
 
-## 命令
+## 命令 [#command]
 
 您还可以使用 `Zotero Plugin: Insert Markdown Citation` 命令来插入引用。
 步骤与编辑器建议类似，唯一的区别是您可以使用 `Shift`+`Enter` 键来插入替代格式的引用。

@@ -4,7 +4,7 @@ import { Callout, Steps } from "nextra/components";
 
 Leave your needs in the comment section below and we will add them to the list.
 
-## Include only manually created tags
+## Include only manually created tags [#only-manual-tags]
 
 To include only manually created tags, not the ones retrieved from literature, use the following code:
 
@@ -20,21 +20,21 @@ This is the default behavior before the change in v1.1.0.
 In Zotero, manually created tags have value 0, while the ones retrieved from literature have value 1.
 </Callout>
 
-## Get when the literature was imported to Zotero
+## Get when the literature was imported to Zotero [#date-accessed]
 
 ```ejs copy
 import-date: <%= it.dateAccessed %>
 ```
 
-## Get the full list of authors
+## Get the full list of authors [#author-list]
 
-### with the full name
+### with the full name [#author-fullname-list]
 
 ```ejs copy
 authors: [<%= it.authors %>]
 ```
 
-### with first name or last name
+### with first name or last name [#author-first-last-name-list]
 
 ```ejs copy
 authors: [<%= it.authors.map(v => v.firstName) %>]

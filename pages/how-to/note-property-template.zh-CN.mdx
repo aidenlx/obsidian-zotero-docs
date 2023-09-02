@@ -4,7 +4,7 @@ import { Callout, Steps } from "nextra/components";
 
 请在下方评论区留下您的需求，我们将把它们添加到列表中。
 
-## 只包括手动创建的标签
+## 只包括手动创建的标签 [#only-manual-tags]
 
 <Callout type="info">
 这是在 v1.1.0 变更之前的默认行为。
@@ -20,21 +20,21 @@ tags: [<%= it.tags.filter(t => t.type === 0) %>]
 在 Zotero 中，手动创建的标签的值为 0，而从相关文献中提取的标签的值为 1。
 </Callout>
 
-## 获取文献导入到 Zotero 的时间
+## 获取文献导入到 Zotero 的时间 [#date-accessed]
 
 ```ejs copy
 import-date: <%= it.dateAccessed %>
 ```
 
-## 获取完整的作者列表
+## 获取完整的作者列表 [#author-list]
 
-### 包括全名
+### 包括全名 [#author-fullname-list]
 
 ```ejs copy
 authors: [<%= it.authors %>]
 ```
 
-### 包括名字或姓氏
+### 包括名字或姓氏 [#author-first-last-name-list]
 
 ```ejs copy
 authors: [<%= it.authors.map(v => v.firstName) %>]

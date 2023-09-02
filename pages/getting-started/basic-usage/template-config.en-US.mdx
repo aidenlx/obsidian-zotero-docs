@@ -10,7 +10,7 @@ You can access the template settings by navigating to `Settings Tab` > `Template
 
 For our templates, we use the [eta](https://eta.js.org/) template engine, similar to the engine that powers the [Templater](https://github.com/SilentVoid13/Templater) plugin.
 
-## Edit Simple Template
+## Edit Simple Template [#edit-simple-template]
 
 For the sake of simplicity, let's start with a simple template. As an example, if you want to include only the title in the note filename, you can replace the default template with the following and press `Apply` Button:
 
@@ -18,7 +18,7 @@ For the sake of simplicity, let's start with a simple template. As an example, i
 <%= it.title %>.md
 ```
 
-## Edit Complex Template
+## Edit Complex Template [#edit-complex-template]
 
 For more complex customization like note content, you'll need to work with the markdown template files, which cannot be edit before being ejected into the template folder.
 
@@ -26,27 +26,27 @@ For more complex customization like note content, you'll need to work with the m
 
 <Steps>
 
-### Go to the Template Settings
+### Go to the Template Settings [#open-template-settings]
 
 Navigate to `Template` > `Ejectable` in Obsidian Settings Tab
 
-### Eject the Template File
+### Eject the Template File [#eject-template-file]
 
 Click the "Eject" button right to Section title to eject the template file into the template folder.
 
 <Callout>Template is saved to `ZtTemplates` folder by default</Callout>
 
-### Open "Note Content" template editor
+### Open "Note Content" template editor [#open-template-editor]
 
 Click `Open template file` button next to template file path to open the template editor.
 
-### Edit template
+### Edit template [#edit-template]
 
 The first column is the template file editor where we can edit the template. we'll discuss the other two columns later.
 
 </Steps>
 
-## Use Live Template Editor
+## Use Live Template Editor [#live-template-editor]
 
 To make the template editing process easier, we provide a live template editor. You have just open it in the previous step. The live template editor is a split view with the template file editor on the left and the previews on the right.
 
@@ -54,7 +54,7 @@ The preview are blank if you haven't selected any item. To select an item:
 
 <Steps>
 
-### Open Annotaion Panel in Obsidian
+### Open Annotaion Panel in Obsidian [#open-annot-panel]
 
 We'll discuss the usage of annotation panel in details later, for now, we only need it to select an item for preview.
 
@@ -65,7 +65,7 @@ We'll discuss the usage of annotation panel in details later, for now, we only n
 
 You should see the annotation panel opened on the right side of the screen.
 
-### Pick a literature to preview
+### Pick a literature to preview [#pick-preview-literature]
 
 <Image
   src="/img/annot-view-pick-literature.png"
@@ -80,7 +80,7 @@ You should see the annotation panel opened on the right side of the screen.
 
 You should see the preview updated with the selected literature.
 
-### Select literature for preview
+### Preview item details [#preview-item-details]
 
 <Image
   src="/img/annot-view-show-details.png"
@@ -105,9 +105,9 @@ In the template editor, you can:
 
 We'll show you how to make use of all these features in the following sections.
 
-## Customize Each Template
+## Customize Each Template [#customize-template]
 
-### Setup Note Properties Template
+### Setup Note Properties Template [#note-properties-template]
 
 Let's start with the `Note Properties` template. By default it looks like this:
 
@@ -145,7 +145,7 @@ You can safely put a field that doesn't exist in the selected item, as it will b
 </Callout>
 
 
-### Update Note Content Template
+### Update Note Content Template [#note-content-template]
 
 The default template looks like this:
 
@@ -168,7 +168,7 @@ Saying that we want to include the abstract of the literature in the note conten
 
 Now you have `<%= it.abstractNote.first() %>` copied into your clipboard. Paste the template code to the template file editor to anywhere you want, and you should see the template preview updated with the abstract.
 
-### Update Template for Each Annotation
+### Update Template for Each Annotation [#note-annot-template]
 
 Assuming that the literature you selected has annotations, you should see the annotation panel filled with the annotations like so:
 
@@ -233,9 +233,9 @@ If you want to check the details of the parent literature, you can use the switc
 
 </Callout>
 
-### Template for Batch Importing Annotations
+### Template for Batch Importing Annotations [#note-annots-template]
 
-You may notice the `<%~ include("annots", it.annotations) %>` in the `Note Content` template. This is a special syntax to include another template. In this case, it's the template for batch importing annotations, named `annots`.
+You may notice the `<%~ include("annots", it.annotations) %>` in the `Note Content` template. This is a [special syntax](#partial-templates) to include another template. In this case, it's the template for batch importing annotations, named `annots`.
 
 First, let's click on `Open Template for Annotations` Button to open the template editor for annotations.
 
@@ -269,6 +269,8 @@ Now, let's say we want to add a divider between each annotation. We can add a di
 You should see the divider added between each annotation in the preview.
 
 That's all about customizing templates in Obsidian-Zotero. In the next section, we will delve into how you can keep your literature notes up-to-date with the latest changes in Zotero.
+
+## List of Partial templates [#partial-templates]
 
 <Callout type="info">
     **List of Partial templates**
