@@ -49,7 +49,7 @@ const config: DocsThemeConfig = {
         width={32}
         height={32}
       />
-      <b>ZotLit</b>
+      <b>Obsidian ZotLit</b>
     </div>
   ),
   // favicon
@@ -66,7 +66,7 @@ const config: DocsThemeConfig = {
     </>
   ),
   project: {
-    link: "https://github.com/aidenlx/obsidian-zotero",
+    link: "https://github.com/PKM-er/obsidian-zotlit",
   },
   main: Main,
   docsRepositoryBase: "https://github.com/aidenlx/obsidian-zotero-docs/edit/main/",

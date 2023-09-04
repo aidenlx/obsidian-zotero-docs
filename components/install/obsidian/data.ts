@@ -11,8 +11,8 @@ export async function getSSGProps(): Promise<ObsidianInstallProps> {
   const [enlisted, mainManifest, betaManifest] = await Promise.all(
     [
       "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
-      "https://raw.githubusercontent.com/aidenlx/obsidian-zotero/master/manifest.json",
-      `https://raw.githubusercontent.com/aidenlx/obsidian-zotero/master/manifest-beta.json`,
+      "https://raw.githubusercontent.com/PKM-er/obsidian-zotlit/master/manifest.json",
+      `https://raw.githubusercontent.com/PKM-er/obsidian-zotlit/master/manifest-beta.json`,
     ].map(async (url): Promise<Record<string, any> | null> => {
       try {
         return await fetch(url).then((res) => res.json());

@@ -1,5 +1,5 @@
 export const updateInfoUrl =
-  "https://raw.githubusercontent.com/aidenlx/obsidian-zotero/master/app/zotero/update.json";
+  "https://raw.githubusercontent.com/PKM-er/obsidian-zotlit/master/app/zotero/update.json";
 
 export type ZoteroInfo = [
   version: string,
@@ -56,7 +56,7 @@ export async function getUpdateJson() {
 
 export async function getZoteroRelease() {
   const data = await fetch(
-    "https://api.github.com/repos/aidenlx/obsidian-zotero/releases"
+    "https://api.github.com/repos/PKM-er/obsidian-zotlit/releases"
   )
     .then((res) => res.json())
     .catch((e) => {
@@ -74,7 +74,7 @@ export async function getZoteroRelease() {
     .assets.find((asset: any) => asset.name.endsWith(".xpi"));
   if (!binary) return null;
 
-  return `https://github.com/aidenlx/obsidian-zotero/releases/download/${release.tag_name}/${binary.name}`;
+  return `https://github.com/PKM-er/obsidian-zotlit/releases/download/${release.tag_name}/${binary.name}`;
 }
 
 export async function getSSGProps(): Promise<ZoteroInfoProps> {

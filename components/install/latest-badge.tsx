@@ -34,4 +34,4 @@ export default function LatestBadge({
   );
 }
 
-export const releaseUrl = "https://github.com/aidenlx/obsidian-zotero/releases";
+export const releaseUrl = "https://github.com/PKM-er/obsidian-zotlit/releases";
