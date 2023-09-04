@@ -34,7 +34,7 @@ function Main({ children }: { children: React.ReactNode }) {
 const config: DocsThemeConfig = {
   useNextSeoProps() {
     return {
-      titleTemplate: "%s – Obsidian Zotero",
+      titleTemplate: "%s – ZotLit",
     };
   },
   i18n: [
@@ -44,19 +44,19 @@ const config: DocsThemeConfig = {
   logo: (
     <div className="nx-flex nx-gap-2 nx-items-center">
       <Image
-        alt="Obsidian Zotero logo"
+        alt="ZotLit logo"
         src="/img/logo.svg"
         width={32}
         height={32}
       />
-      <b>Obsidian Zotero</b>
+      <b>ZotLit</b>
     </div>
   ),
   // favicon
   head: (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      {/* <meta property="og:title" content="Obsidian Zotero" />
+      {/* <meta property="og:title" content="ZotLit" />
       <meta
         property="og:description"
         content="a third-party project that aims to facilitate the integration between Obsidian.md and Zotero"

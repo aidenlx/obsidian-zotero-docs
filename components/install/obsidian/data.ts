@@ -25,7 +25,7 @@ export async function getSSGProps(): Promise<ObsidianInstallProps> {
 
   const detailsFromEnlisted =
     enlisted && Array.isArray(enlisted)
-      ? enlisted.find((plugin) => plugin.id === "obsidian-zotero-plugin")
+      ? enlisted.find((plugin) => plugin.id === "zotlit")
       : null;
 
   return {

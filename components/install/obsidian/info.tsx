@@ -63,7 +63,7 @@ export const ReleaseLink = () => {
   const manifest = mainManifest ?? betaManifest;
   return (
     <LatestBadge
-      href={toDownloadLink("obsidian-zotero-plugin.zip", manifest?.version)}
+      href={toDownloadLink("zotlit.zip", manifest?.version)}
       type="obsidian"
       newPage
     />
