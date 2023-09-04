@@ -43,15 +43,13 @@ const config: DocsThemeConfig = {
   ],
   logo: (
     <div className="nx-flex nx-gap-2 nx-items-center">
-      <Image
-        alt="ZotLit logo"
-        src="/img/logo.svg"
-        width={32}
-        height={32}
-      />
+      <Image alt="ZotLit logo" src="/img/logo.svg" width={32} height={32} />
       <b>Obsidian ZotLit</b>
     </div>
   ),
+  sidebar: {
+    defaultMenuCollapseLevel: 3,
+  },
   // favicon
   head: (
     <>
@@ -69,7 +67,8 @@ const config: DocsThemeConfig = {
     link: "https://github.com/PKM-er/obsidian-zotlit",
   },
   main: Main,
-  docsRepositoryBase: "https://github.com/aidenlx/obsidian-zotero-docs/edit/main/",
+  docsRepositoryBase:
+    "https://github.com/aidenlx/obsidian-zotero-docs/edit/main/",
   footer: {
     text: (
       <div className="nx-flex nx-gap-4 nx-items-center">
