@@ -138,9 +138,19 @@ For more examples of Note Property Template, please refer to [How-to](/how-to/te
 
 <Callout>
 
-This template is parsed using Obsidian's bulti-in YAML parser before being applied to the note. You may notice the resulting frontmatter is not exactly the same as the template. 
+This template is, by default, parsed using Obsidian's bulti-in YAML parser before being applied to the note. You may notice the resulting frontmatter is not exactly the same as the template. 
 
-You can safely put a field that doesn't exist in the selected item, as it will be ignored before being applied to the note.
+If you prefer formatting frontmatter yourself, you can disable the YAML formatter by adding the following line to the template:
+
+```ejs filename="Note Properties" copy
+---
+raw: true
+---
+```
+
+Note: if note properties in literature note is updated, the formatter will 
+kick in, breaking the previous formatting regardless of `raw: true` setting,
+due to Obsidian API to update frontmatter properties. 
 
 </Callout>
 

@@ -138,9 +138,17 @@ tags: <%= JSON.stringify(it.tags) %>
 
 <Callout>
 
-此模板在应用于笔记之前使用 Obsidian 的内置 YAML 解析器进行解析。您可能会注意到生成的元信息与模板并不完全相同。
+此模板默认在写入笔记之前使用 Obsidian 的内置 YAML 解析器进行排版美化。您可能会注意到生成的实际YAML与模板的格式并不完全相同。
 
-您可以放心地放置一个可能不存在的字段，因为在应用于笔记之前，它将被剔除掉。
+如果你希望完全控制 YAML 的格式，你可以在模板顶部加上以下内容来禁用 YAML 格式化：
+
+```ejs filename="Note Properties" copy
+---
+raw: true
+---
+```
+
+注意：如果你在后期更新了笔记的属性，由于 Obsidian API 用于更新属性的 API 的限制，无论是否设置了 `raw: true` ，YAML格式化都会启动并破坏先前的格式。
 
 </Callout>
 
