@@ -1,8 +1,10 @@
 ---
 sidebar_position: 1
+title: Introduction
 ---
 
-import { Callout } from "nextra/components";
+import { Callout, Cards, Card } from "nextra/components";
+import { FaDownload, FaHammer } from "react-icons/fa6"
 
 # Obsidian ZotLit
 
@@ -10,9 +12,10 @@ ZotLit is a third-party project that aims to facilitate the integration between 
 
 ## Getting Started [#getting-started]
 
-1. [Installation](/getting-started/install/)
-2. [Basic Usage](/getting-started/basic-usage/)
-3. [Advanced Feature](/getting-started/advanced-feature/)
+<Cards>
+  <Card icon={<FaDownload />} title="Installation" href="/getting-started/install/" />
+  <Card icon={<FaHammer />} title="Basic Usage" href="/getting-started/basic-usage/" />
+</Cards>
 
 ## Features [#features]
 
@@ -30,7 +33,7 @@ ZotLit is a third-party project that aims to facilitate the integration between 
 - 🔨 Highly customizable templates
   - Write your own templates to generate literature note and import annotation in any format you want.
   - Powered by [Eta](https://eta.js.org/), write JavaScript code in your templates to handle complex transformations.
-  - View all data in a literature in a structured way by using `DetailsView`.
+  - View all data about a literature stored in Zotero in a structured way.
 - 🔍 Annotation View
   - View annotations within Obsidian, side-by-side with the literature note.
   - Drag annotation to the literature note to import it.

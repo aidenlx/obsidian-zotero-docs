@@ -11,3 +11,22 @@
 3. **搜索并以标记符格式插入引文和书目**：使用 obsidian-zotero，你可以搜索你的 Zotero 库，并以 Markdown 格式将引文直接插入你的 Obsidian 笔记。
 
 现在，话不多说，让我们深入了解这些功能，帮助你充分利用 obsidian-zotero 插件！
+
+import { Cards, Card } from "nextra/components";
+import {
+  FaFileImport,
+  FaFilePen,
+  FaGear,
+  FaRotate,
+  FaBookBookmark,
+  FaQuoteRight,
+} from "react-icons/fa6";
+
+<Cards>
+  <Card icon={<FaFileImport />} href="/getting-started/basic-usage/annotation-import" title="导入摘录" />
+  <Card icon={<FaFilePen />} href="/getting-started/basic-usage/template-basics" title="模板入门" />
+  <Card icon={<FaGear />} href="/getting-started/basic-usage/template-config" title="配置模板" />
+  <Card icon={<FaRotate />} href="/getting-started/basic-usage/update-notes" title="同步笔记" />
+  <Card icon={<FaBookBookmark />} href="/getting-started/basic-usage/annotation-view" title="阅读摘录" />
+  <Card icon={<FaQuoteRight />} href="/getting-started/basic-usage/citation-insertion" title="插入引用" />
+</Cards>

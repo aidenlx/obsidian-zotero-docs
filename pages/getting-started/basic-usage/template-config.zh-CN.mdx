@@ -107,6 +107,17 @@ import Image from "next/image";
 
 ## 设置模板 [#customize-template]
 
+import { FileTree } from 'nextra/components'
+ 
+<FileTree>
+  <FileTree.Folder name="ZtTemplates" defaultOpen>
+    <FileTree.File name="zt-field.eta" />
+    <FileTree.File name="zt-note.eta" />
+    <FileTree.File name="zt-annot.eta" />
+    <FileTree.File name="zt-annots.eta" />
+  </FileTree.Folder>
+</FileTree>
+
 ### 笔记属性模板 [#note-properties-template]
 
 让我们从“笔记属性”模板开始。默认模板如下所示：

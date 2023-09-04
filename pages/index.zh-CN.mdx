@@ -1,8 +1,10 @@
 ---
 sidebar_position: 1
+title: 简介
 ---
 
-import { Callout } from "nextra/components";
+import { Callout, Cards, Card } from "nextra/components";
+import { FaDownload, FaHammer } from "react-icons/fa6"
 
 # Obsidian ZotLit
 
@@ -10,9 +12,10 @@ ZotLit 是一个第三方项目，主要通过为 Obsidian 和 Zotero 提供一�
 
 ## 入门指南 [#getting-started]
 
-1. [安装](/getting-started/install/)
-2. [基本使用](/getting-started/basic-usage/)
-3. [高级功能](/getting-started/advanced-feature/)
+<Cards>
+  <Card icon={<FaDownload />} title="安装" href="/getting-started/install/" />
+  <Card icon={<FaHammer />} title="基本用法" href="/getting-started/basic-usage/" />
+</Cards>
 
 ## 功能 [#features]
 
@@ -29,7 +32,7 @@ ZotLit 是一个第三方项目，主要通过为 Obsidian 和 Zotero 提供一�
 - 🔨 高度可定制的模板
   - 编写自己的模板以生成文献注释和以任何格式导入批注。
   - 使用 [Eta](https://eta.js.org/) 提供支持，可以在模板中编写JavaScript代码来处理复杂的转换。
-  - 使用 `DetailsView` 以结构化的方式查看文献中的所有数据。
+  - 以结构化的方式查看 Zotero 存储的所有文献中的数据。
 - 🔍 批注视图
   - 在Obsidian中查看批注，与文献笔记并排显示。
   - 将批注拖动到文献笔记中进行导入。

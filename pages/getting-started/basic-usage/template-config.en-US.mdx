@@ -107,6 +107,17 @@ We'll show you how to make use of all these features in the following sections.
 
 ## Customize Each Template [#customize-template]
 
+import { FileTree } from 'nextra/components'
+ 
+<FileTree>
+  <FileTree.Folder name="ZtTemplates" defaultOpen>
+    <FileTree.File name="zt-field.eta" />
+    <FileTree.File name="zt-note.eta" />
+    <FileTree.File name="zt-annot.eta" />
+    <FileTree.File name="zt-annots.eta" />
+  </FileTree.Folder>
+</FileTree>
+
 ### Setup Note Properties Template [#note-properties-template]
 
 Let's start with the `Note Properties` template. By default it looks like this:
