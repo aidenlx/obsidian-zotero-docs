@@ -14,7 +14,7 @@ function Main({ children }: { children: React.ReactNode }) {
     <>
       {children}
       <Giscus
-        repo="PKM-er/obsidian-zotero"
+        repo="PKM-er/obsidian-zotlit"
         repoId="R_kgDOGy2_uA"
         category="Docs Comments"
         categoryId="DIC_kwDOGy2_uM4CSEbI"
