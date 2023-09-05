@@ -227,7 +227,7 @@ raw: true
 > ^LUE86KQFaF39HNRLZp2
 ```
 
-假设您希望以调用类型作为标注类型而不是“note”添加颜色，您可以在标注中找到两个关于颜色的变量：`color` 和 `colorName`。在这里，我们使用 `colorName`，这是可读性更好的颜色名称而不是颜色码。右键单击 `abstractNote` 并选择“Copy Template”。
+假设您希望以调用类型作为标注类型而不是“note”添加颜色，您可以在标注中找到两个关于颜色的变量：`color` 和 `colorName`。在这里，我们使用 `colorName`，这是可读性更好的颜色名称而不是颜色的Hex代码。右键单击 `abstractNote` 并选择“Copy Template”。
 
 ![从详细视图中复制颜色模板](/img/template-editor-copy-2.png)
 
@@ -240,7 +240,7 @@ raw: true
 
 您应该会看到预览随着颜色名称的更新而更新。
 
-此外，如果您想要将文献的标题添加到标注中，您在标注详情中找不到它。相反，您可以在所属文献的详细信息中找到它，存储在 `it.docItem` 中。因此，要添加标题，您可以在标注模板中使用 `<%= it.docItem.title %>`。
+有时候，你可能希望在摘录模板中包含文献的标题，但是您在摘录本身的详细信息中找不到它。这是因为其所属文献的信息存储在 `it.docItem` 中。因此，要添加标题，您可以在标注模板中使用 `<%= it.docItem.title %>`。
 
 <Callout>
 

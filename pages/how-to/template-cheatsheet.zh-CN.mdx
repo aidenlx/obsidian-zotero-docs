@@ -14,6 +14,14 @@ authors: <%= it.authorsShort %>
 
 输出类似 `Gerasimavicius et al.` 的形式。
 
+### 在摘录模板获取作者简称 [#authors-shorthand-in-annotation]
+
+摘录所属的文献信息存储在 `it.docItem` 中。
+
+```ejs filename="Note Annotations" copy
+from <%= it.docItem.authorsShort %>
+```
+
 ### 获取完整姓名的作者列表 [#author-fullname-list]
 
 ```ejs filename="Note Properties" copy

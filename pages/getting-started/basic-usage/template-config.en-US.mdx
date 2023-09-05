@@ -239,7 +239,7 @@ Paste it into `[!note]` to replace it. Your template should look like this:
 
 You should see the preview updated with the color name.
 
-In addition, if you want to add the title of the literature to the annotation, you can't find it in the annotation details. Instead, you can find it in the details of parent literature, stored in `it.docItem`. So to add the title, you can use `<%= it.docItem.title %>` in the annotation template.
+In addition, if you want to add the title of the literature to the annotation, you can't find it in the annotation details. This is because those info about parent literature are stored in `it.docItem`. So to add the title, you can use `<%= it.docItem.title %>` in the annotation template.
 
 <Callout>
 

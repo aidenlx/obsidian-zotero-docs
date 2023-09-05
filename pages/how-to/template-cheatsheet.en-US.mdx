@@ -14,6 +14,14 @@ authors: <%= it.authorsShort %>
 
 It will be rendered like `Gerasimavicius et al.`.
 
+### Get author shorthand in annotation template [#authors-shorthand-in-annotation]
+
+Info about parent literature are stored in `it.docItem`.
+
+```ejs filename="Note Annotations" copy
+from <%= it.docItem.authorsShort %>
+```
+
 ### Get List of Authors in Full Names [#author-fullname-list]
 
 ```ejs filename="Note Properties" copy
