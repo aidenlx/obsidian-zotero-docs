@@ -5,9 +5,19 @@ import { useTheme } from "next-themes";
 import { useMounted } from "nextra/hooks";
 import { useRouter } from "next/router";
 
-function Banner(){
+function ICP() {
   const { locale } = useRouter();
-  
+  if (locale !== "zh-CN") return null;
+  return (
+    <a
+      className="text-xs"
+      href="https://beian.miit.gov.cn/"
+      target="_blank"
+      rel="noreferrer"
+    >
+      闽ICP备19020233号-1
+    </a>
+  );
 }
 
 function Main({ children }: { children: React.ReactNode }) {
@@ -18,20 +28,22 @@ function Main({ children }: { children: React.ReactNode }) {
   return (
     <>
       {children}
-      <Giscus
-        repo="PKM-er/obsidian-zotlit"
-        repoId="R_kgDOGy2_uA"
-        category="Docs Comments"
-        categoryId="DIC_kwDOGy2_uM4CSEbI"
-        mapping="pathname"
-        strict="1"
-        reactionsEnabled="1"
-        emitMetadata="0"
-        inputPosition="top"
-        loading="lazy"
-        theme={mounted && isDark ? "dark" : "light"}
-        lang={locale === "en-US" ? "en" : locale}
-      />
+      {locale !== "zh-CN" && (
+        <Giscus
+          repo="PKM-er/obsidian-zotlit"
+          repoId="R_kgDOGy2_uA"
+          category="Docs Comments"
+          categoryId="DIC_kwDOGy2_uM4CSEbI"
+          mapping="pathname"
+          strict="1"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="top"
+          loading="lazy"
+          theme={mounted && isDark ? "dark" : "light"}
+          lang={locale === "en-US" ? "en" : locale}
+        />
+      )}
     </>
   );
 }
@@ -76,12 +88,19 @@ const config: DocsThemeConfig = {
     "https://github.com/aidenlx/obsidian-zotero-docs/edit/main/",
   footer: {
     text: (
-      <div className="flex gap-4 items-center">
-        <span>Copyright © {new Date().getFullYear()} AidenLx.</span>
-        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">
-          闽ICP备19020233号-1
-        </a>
+      <div className="flex w-full flex-col items-center sm:items-start">
+        <p className="flex items-center gap-1 text-current">
+          <b>Obsidian ZotLit</b>
+        </p>
+        <p className="mt-6 text-xs">© {new Date().getFullYear()} AidenLx</p>
+        <ICP />
       </div>
+      // <div className="flex gap-4 items-center">
+      //   <span>Copyright © {new Date().getFullYear()} AidenLx.</span>
+      //   <a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">
+      //     闽ICP备19020233号-1
+      //   </a>
+      // </div>
     ),
   },
   primaryHue: {
