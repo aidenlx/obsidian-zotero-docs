@@ -5,6 +5,11 @@ import { useTheme } from "next-themes";
 import { useMounted } from "nextra/hooks";
 import { useRouter } from "next/router";
 
+function Banner(){
+  const { locale } = useRouter();
+  
+}
+
 function Main({ children }: { children: React.ReactNode }) {
   const { resolvedTheme } = useTheme();
   const mounted = useMounted();
@@ -42,7 +47,7 @@ const config: DocsThemeConfig = {
     { locale: "zh-CN", text: "简体中文" },
   ],
   logo: (
-    <div className="nx-flex nx-gap-2 nx-items-center">
+    <div className="flex gap-2 items-center">
       <Image alt="ZotLit logo" src="/img/logo.svg" width={32} height={32} />
       <b>Obsidian ZotLit</b>
     </div>
@@ -71,7 +76,7 @@ const config: DocsThemeConfig = {
     "https://github.com/aidenlx/obsidian-zotero-docs/edit/main/",
   footer: {
     text: (
-      <div className="nx-flex nx-gap-4 nx-items-center">
+      <div className="flex gap-4 items-center">
         <span>Copyright © {new Date().getFullYear()} AidenLx.</span>
         <a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">
           闽ICP备19020233号-1
