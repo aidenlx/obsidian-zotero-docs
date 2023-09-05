@@ -78,7 +78,7 @@ publish-date: <%= it.date %>
 
 有关详细信息，请参见 [Object.groupBy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy) 和 [Map.groupBy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/groupBy)。
 
-### 按注释颜色分组 [#group-by-annotation-color]
+### 按摘录颜色分组 [#group-by-annotation-color]
 
 ```ejs filename="Note Annotations" copy
 <% const byColor = Object.groupBy(it, (annot) => annot.colorName); 
@@ -92,7 +92,7 @@ for (const color in byColor) { -%>
 <% } %>
 ```
 
-### 按注释颜色分组，自定义标签 [#group-by-annotation-color-customized-label]
+### 按摘录颜色分组，自定义标签 [#group-by-annotation-color-customized-label]
 
 ```ejs filename="Note Annotations" copy
 <% const byColor = Object.groupBy(it, (annot) => annot.colorName);
