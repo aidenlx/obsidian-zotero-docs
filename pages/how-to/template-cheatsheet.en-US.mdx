@@ -18,7 +18,7 @@ It will be rendered like `Gerasimavicius et al.`.
 
 Info about parent literature are stored in `it.docItem`.
 
-```ejs filename="Note Annotations" copy
+```ejs filename="Note Annotation" copy
 from <%= it.docItem.authorsShort %>
 ```
 
@@ -81,6 +81,34 @@ import-date: <%= it.dateAccessed %>
 
 ```ejs filename="Note Properties" copy
 publish-date: <%= it.date %>
+```
+
+## Collection [#collection]
+
+### Get collection name [#collection-name]
+
+```ejs filename="Note Properties" copy
+collection: "<%= it.collection %>"
+```
+
+### Get collection path [#collection-path]
+
+By default, the collection path is separated by ` > `.
+
+```ejs filename="Note Properties" copy
+collection-path: <%= it.collection?.path %>
+```
+
+You can customize the separator by using join function.
+
+```ejs filename="Note Properties" copy
+collection-path: <%= it.collection?.path.join("/") %>
+```
+
+### Get root collection [#root-collection]
+
+```ejs filename="Note Properties" copy
+collection: <%= it.collection?.at(0) %>
 ```
 
 ## Grouping [#grouping]

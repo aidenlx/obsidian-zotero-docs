@@ -18,7 +18,7 @@ authors: <%= it.authorsShort %>
 
 摘录所属的文献信息存储在 `it.docItem` 中。
 
-```ejs filename="Note Annotations" copy
+```ejs filename="Note Annotation" copy
 from <%= it.docItem.authorsShort %>
 ```
 
@@ -67,6 +67,34 @@ tags: [<%= it.tags.filter(t => t.type === 0) %>]
 <Callout>
 在 Zotero 中，手动创建的标签值为 0，而从文献中提取的标签值为 1。
 </Callout>
+
+## 分类 (Collection) [#collection]
+
+### 获取分类名 [#collection-name]
+
+```ejs filename="Note Properties" copy
+collection: "<%= it.collection %>"
+```
+
+### 获取分类层级 [#collection-path]
+
+分类层级默认以 ` > ` 分隔。
+
+```ejs filename="Note Properties" copy
+collection-path: <%= it.collection?.path %>
+```
+
+你可以使用 join 函数自定义分隔符。
+
+```ejs filename="Note Properties" copy
+collection-path: <%= it.collection?.path.join("/") %>
+```
+
+### 获取最高层级 [#root-collection]
+
+```ejs filename="Note Properties" copy
+collection: <%= it.collection?.at(0) %>
+```
 
 ## 日期
 
