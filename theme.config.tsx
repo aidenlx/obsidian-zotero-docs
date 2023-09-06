@@ -1,52 +1,7 @@
 import { DocsThemeConfig } from "nextra-theme-docs";
-import Giscus from "@giscus/react";
 import Image from "next/image";
-import { useTheme } from "next-themes";
-import { useMounted } from "nextra/hooks";
-import { useRouter } from "next/router";
-
-function ICP() {
-  const { locale } = useRouter();
-  if (locale !== "zh-CN") return null;
-  return (
-    <a
-      className="text-xs"
-      href="https://beian.miit.gov.cn/"
-      target="_blank"
-      rel="noreferrer"
-    >
-      闽ICP备19020233号-1
-    </a>
-  );
-}
-
-function Main({ children }: { children: React.ReactNode }) {
-  const { resolvedTheme } = useTheme();
-  const mounted = useMounted();
-  const { locale } = useRouter();
-  const isDark = resolvedTheme === "dark";
-  return (
-    <>
-      {children}
-      {locale !== "zh-CN" && (
-        <Giscus
-          repo="PKM-er/obsidian-zotlit"
-          repoId="R_kgDOGy2_uA"
-          category="Docs Comments"
-          categoryId="DIC_kwDOGy2_uM4CSEbI"
-          mapping="pathname"
-          strict="1"
-          reactionsEnabled="1"
-          emitMetadata="0"
-          inputPosition="top"
-          loading="lazy"
-          theme={mounted && isDark ? "dark" : "light"}
-          lang={locale === "en-US" ? "en" : locale}
-        />
-      )}
-    </>
-  );
-}
+import Main from "./components/Main";
+import ICP from "./components/ICP";
 
 const config: DocsThemeConfig = {
   useNextSeoProps() {
