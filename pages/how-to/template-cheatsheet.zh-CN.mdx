@@ -79,14 +79,14 @@ collections: [<%= it.collections %>]
 ### 获取分类层级 [#collection-path]
 
 ```ejs filename="Note Properties" copy
-collections: [<%= it.collection.map(c => c.path) %>]
+collections: [<%= it.collections.map(c => c.path) %>]
 ```
 
-分类层级默认以 ` > ` 分隔，输出类似 `Collection 1 > Collection 2 > Collection 3`
+分类层级默认以 ` > ` 分隔，输出类似 `Collection 1 > Collection 2 > Collection 3`。
 你也可以使用 join 函数自定义分隔符，例如以下示例将使用 `/` 作为分隔符，输出类似多级标签的形式 (`A/B/C`)
 
 ```ejs filename="Note Properties" copy
-collection-path: <%= it.collection?.path.join("/") %>
+collection-path: [<%= it.collections.map(c => c.path.join("/")) %>]
 ```
 
 

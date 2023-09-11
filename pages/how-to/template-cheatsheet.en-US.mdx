@@ -94,7 +94,7 @@ collections: [<%= it.collections %>]
 ### Get collection with full path [#collection-path]
 
 ```ejs filename="Note Properties" copy
-collections: [<%= it.collection.map(c => c.path) %>]
+collections: [<%= it.collections.map(c => c.path) %>]
 ```
 
 By default, the collection path is separated by ` > `, output like `Collection 1 > Collection 2 > Collection 3`.
@@ -103,7 +103,7 @@ You can customize the separator by using join function.
 The following code will output `A/B/C`, similar to multi-level tags in Obsidian: 
 
 ```ejs filename="Note Properties" copy
-collections: [<%= it.collection.map(c => c.path.join("/")) %>]
+collections: [<%= it.collections.map(c => c.path.join("/")) %>]
 ```
 
 ### Get top-level collections [#root-collection]
