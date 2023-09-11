@@ -83,32 +83,33 @@ import-date: <%= it.dateAccessed %>
 publish-date: <%= it.date %>
 ```
 
-## Collection [#collection]
+## Collections [#collection]
 
-### Get collection name [#collection-name]
-
-```ejs filename="Note Properties" copy
-collection: "<%= it.collection %>"
-```
-
-### Get collection path [#collection-path]
-
-By default, the collection path is separated by ` > `.
+### Get collections [#collection-name]
 
 ```ejs filename="Note Properties" copy
-collection-path: <%= it.collection?.path %>
+collections: [<%= it.collections %>]
 ```
 
+### Get collection with full path [#collection-path]
+
+```ejs filename="Note Properties" copy
+collections: [<%= it.collection.map(c => c.path) %>]
+```
+
+By default, the collection path is separated by ` > `, output like `Collection 1 > Collection 2 > Collection 3`.
 You can customize the separator by using join function.
 
+The following code will output `A/B/C`, similar to multi-level tags in Obsidian: 
+
 ```ejs filename="Note Properties" copy
-collection-path: <%= it.collection?.path.join("/") %>
+collections: [<%= it.collection.map(c => c.path.join("/")) %>]
 ```
 
-### Get root collection [#root-collection]
+### Get top-level collections [#root-collection]
 
 ```ejs filename="Note Properties" copy
-collection: <%= it.collection?.at(0) %>
+top-collections: [<%= [...new Set(it.collections.map(c => c.path[0]))] %>]
 ```
 
 ## Grouping [#grouping]
