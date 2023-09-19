@@ -2,7 +2,6 @@ import Giscus from "@giscus/react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
 import { useMounted } from "nextra/hooks";
-import { useEffect } from "react";
 
 export default function Main({ children }: { children: React.ReactNode }) {
   const { resolvedTheme } = useTheme();
