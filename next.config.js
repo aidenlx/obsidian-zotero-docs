@@ -8,4 +8,14 @@ module.exports = withNextra({
     locales: ["en-US", "zh-CN"],
     defaultLocale: "en-US",
   },
+  // The v1 docs stay online for v1 users; search engines list the current
+  // docs at zotlit.aidenlx.site instead.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex" }],
+      },
+    ];
+  },
 });
